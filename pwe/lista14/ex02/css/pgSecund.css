@@ -1,0 +1,19 @@
+body { 
+    background-color: gray;
+}
+
+div {
+    border: 2px solid black;
+    width: 200px;
+    padding: 20px;
+    text-align: center;
+    margin: 75px 50px 10px 150px;
+    border-radius: 8px;
+    background-color: lightgray;
+
+    
+}
+
+ul {
+    list-style: none;
+}

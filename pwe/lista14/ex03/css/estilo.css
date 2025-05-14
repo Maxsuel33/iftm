@@ -1,0 +1,18 @@
+div {
+    border-left: 10px solid #FF3300;
+    border-right: 10px solid #FF3300;
+    padding: 20px;
+    margin: 50px;
+    background-color: #CAF3FF;
+
+}
+
+h1 {
+    font-size: 30px;
+    border-bottom: 1px solid #FF3300;
+}
+
+p {
+    letter-spacing: 2;
+    font-size: 14px;
+}
