@@ -1,0 +1,77 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0; 
+}
+
+
+body {
+    background-color: black;
+
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+
+.moldCelular {
+    background-color: white;
+    width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.moldCelular > h1 {
+    text-align: center;
+    color: red;
+    font-size: 30px;
+    margin-bottom: 10px;
+
+}
+
+.moldCelular > p {
+    text-align: center;
+    color: black;
+    margin-bottom: 20px;
+
+}
+
+.moldCelular > div div {
+    width: 250px;
+    margin: 10px 10px;
+    text-align: center;
+    padding: 5px;
+    
+}
+
+
+.moldCelular > div div h2 {
+    text-align: center;
+    font-size: 18px;
+
+}
+
+.moldCelular > div div p {
+    text-align: justify;
+    font-size: 14px;
+    color: black;
+    padding: 5px;
+    
+
+}
+
+.moldCelular > div div details {
+    text-align: left;
+    font-size: 14px;
+    color: blue;
+    cursor: pointer;
+
+
+}
+
+
