@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+body {
+    font-family: arial;
+}
+
+.containerSec {
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.futWeb {
+    text-align: center;
+    justify-content: center;
+}
+
+
+
+.caixoteSec {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+
+.futWeb > div img {
+    margin: 30px 0px 10px 0px;
+}
+
+.containerSec > hr {
+    width: 200px;
+    border: 1px solid red;
+    margin: auto;
+    border-radius: 8px;
+    
+
+}
+
+.futWeb > div h1 {
+    margin: 30px 0px;
+
+}
+
+
+.futWeb > div button {
+    padding: 5px;
+    background-color: orangered;
+    border: none;
+    border-radius: 4px;
+}
+
+.futWeb > div button:hover {
+    cursor: pointer;
+    background-color: orange;
+}
