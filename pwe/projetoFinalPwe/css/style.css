@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Tint&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    padding-top: 70px;
+}
+
+header {
+    background-color: rgb(160, 0, 0);
+    position: fixed;
+    width: 100%;
+    padding: 10px;
+    top: -120px;
+    transition: all 0.6s;
+}
+
+header:hover {
+    top: 0px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: ;
+}
+
+header nav {
+    font-family: "Bungee", sans-serif;
+    border: 1px solid red;
+    width: 600px;
+    margin: auto;
+    
+   
+}
+
+header nav:hover {
+    
+}
+
+header nav ul {
+  
+    list-style: none;
+    padding: 0px;
+    text-align: center  ;
+
+}
+
+header nav ul li {
+  
+    display: inline-block;
+}
+
+header nav a:link, header nav a:visited {
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    display: inline-block;
+
+}
+
+header nav a:hover {
+    color: black;
+    background-color: white;
+    
+}
+
+.voltarTopo {
+    border: 1px solid black;
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    top: 160px;
+    right: 30px;
+    background-color: rgba(240, 248, 255, 0.973);
+}
