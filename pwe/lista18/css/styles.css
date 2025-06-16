@@ -1,0 +1,218 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    width: 1200px;
+    margin: 0 auto;
+    background-color:white;
+}
+
+.titulo {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.titulo h1 {
+    color: rgb(173, 0, 46);
+    display: inline-block;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.imagensMini {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.imagensMini img {
+    width: 50px;
+    height: auto;
+}
+
+.barra {
+    width: 400px;
+    height: 3px;
+    background-color: rgb(173, 0, 46);
+    margin: 30px auto 80px auto;
+}
+
+.divulgacao h1 {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.botao {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: orangered;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.8s ;
+}
+
+.botao:hover {
+    background-color: rgb(173, 0, 46);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container p {
+    text-align: center;
+    padding: 40px 0;
+    max-width: 800px;
+    line-height: 1.5;
+}
+
+.secTecnologias {
+    padding: 60px 20px;
+    background-color: #ddd2d2;
+    text-align: center;
+    margin-top: 30px;
+    border-top: 1px solid #ccc;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.tituloTec h1 {
+    color:rgb(173, 0, 46);
+    text-align: center;
+    padding: 30px;
+    margin-bottom: 10px;
+}
+
+.icnTecnologia {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+    margin-bottom: 60px;
+    margin-top: 30px;
+    padding: 0 20px;
+}
+
+.tecnologiaItem{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    flex-basis: 280px; 
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box; 
+}
+
+.tecnologiaItem img {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.tecnologiaItem h2 {
+    font-size: 1.4em;
+    color: rgb(88, 88, 88);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center; 
+}
+
+.tecnologiaItem p {
+    font-size: 0.95em;
+    line-height: 1.6;
+    max-width: 250px; 
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.portfolio {
+    padding: 60px 0;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.portfolioTitulo {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.portfolioTitulo h1 {
+    color: rgb(173, 0, 46);
+    padding: 20px 0;
+    text-transform: uppercase;
+}
+
+.portfolioItem {
+    display: flex;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto 80px auto;
+    padding: 0 20px;
+}
+
+.portfolioItem:last-child {
+    margin-bottom: 0;
+}
+
+.portfolioTexto {
+    flex: 1;
+    padding-right: 40px;
+    text-align: justify;
+}
+
+.portfolioTexto p {
+    font-size: 1.05em;
+    line-height: 1.7;
+    margin: 0;
+}
+
+	.portfolioImagem {
+    flex-shrink: 0;
+    width: 400px;
+    height: auto;
+}
+
+.portfolioImagem img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.esquerda {
+    flex-direction: row-reverse;
+}
+
+.esquerda .portfolioTexto {
+    padding-left: 40px;
+    padding-right: 0;
+}
+
+
+footer {
+    height: 100px;
+    text-align: center;
+    padding: 45px;
+    width: 100%;
+    background-color: black;
+    color: white;
+}
