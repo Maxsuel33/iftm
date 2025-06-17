@@ -1,0 +1,134 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto';
+}
+body {
+    background-color: rgb(135, 135, 135);
+}
+.secHeader {
+    background-color: black;
+    color: white;
+    padding: 20px;
+}
+.secHeader h1 {
+    font-size: 30px;
+}
+.secHeader div {
+    background-image: url('../img/logoManutencao.png');
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: 80px;
+    border: 1px solid red;
+}
+.container {
+    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+header nav {
+    background-color: rgb(0, 0, 186);
+}
+
+header nav ul {
+    text-align: center;
+    align-items: center;
+    list-style: none;
+}
+
+header nav ul li {
+    display: inline-block;
+}
+
+header a:link,
+header a:visited {
+    color: white;
+    text-decoration: none;
+    padding: 30px;
+    display: inline-block;
+    margin: 15px;
+
+
+}
+
+header nav ul a:hover {
+    border-bottom: 2px solid yellow;
+    border-top: 2px solid red;
+}
+
+.section {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 1200px;
+    margin: auto;
+
+}
+
+.manutencao img {
+    width: 550px;
+    margin: 10px;
+  
+}
+.manutencao h2 {
+    color: red;
+}
+
+.produtos {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.produtos h2 {
+    color: blue;
+    text-align: center;
+}
+
+.produtos p {
+    text-align: justify;
+    font-weight: bold;
+}
+
+.produtos > div div {
+    width: 100%;
+    margin: 20px;
+    padding: 10px;
+  
+
+}
+
+.parceirosPatrocinadores {
+    display: flex;
+    text-align: center;
+    background-color: rgb(200, 200, 200);
+    padding: 10px;
+    width: 1200px;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.parceirosPatrocinadores > div {
+    
+    width: 50%;
+    margin: auto;
+    padding-left: 50px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.parceirosPatrocinadores ul {
+    margin-left: 40px;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+
