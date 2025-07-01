@@ -1,0 +1,169 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: arial;
+}
+
+/*Versão: Mobile*/
+header nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+header nav a:link, header nav a:visited {
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    color: black;
+    padding: 10px;
+}
+header nav a:hover {
+    background-color: rgb(85, 85, 85);
+    color: white;
+}
+.section_apresentacao {
+    text-align: center;
+    
+}
+section:nth-of-type(odd) p {
+    padding: 30px 0px;
+}
+
+section:nth-of-type(odd) {
+    background-color: rgb(31, 31, 31);
+    color: rgb(239, 239, 239);
+    text-align: center;
+
+}
+
+section {
+    padding: 30px;
+}
+section img {
+    max-width: 100%;
+    height: auto;
+}
+
+input[type="button"] {
+    background-color: dodgerblue;
+    border:none;
+    color: white;
+    padding: 15px;
+    font-size:16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+input[type="button"]:hover {
+    background-color: rgb(0, 48, 95);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.secPlanos > div > div {
+    text-align: center;
+    padding: 35px 0px;
+
+}
+
+.secPlanos > div > div p {
+    text-align: justify;
+    font-size: 15px;
+   
+    line-height: 1.5em;
+
+}
+
+.secPlanos > div > div > h2 {
+    color: red;
+    font-size: 18px;
+    margin: 0px 0px 20px 0px;
+}
+
+.secFotos > div > div {
+    text-align: center;
+}
+
+.secFotos > div > div p {
+    text-align: justify;
+}
+
+.secFotos > div > div > figure figcaption {
+    font-size: 22px;
+    font-weight: bold;
+    padding: 10px 0px;
+}
+
+.secFotos input[type="button"] {
+    margin: 20px 0px;
+
+}
+
+footer {
+    background-color: rgb(31, 31, 31);
+    color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+
+
+
+
+/*Versão: Tablet e Desktop*/
+@media screen and (min-width:768px) {
+
+    .container {
+        display: flex;
+        flex-direction: row;
+
+    }
+
+    header nav ul {
+        flex-direction: row;
+        justify-content: right;
+    }
+
+
+    header nav a:link, header nav a:visited {
+        padding: 15px 25px;
+    }
+
+    .secPlanos div > div { 
+        padding: 70px 35px;
+        width: 100%;
+
+    }
+
+    main section > div {
+        width: 1200px;
+        margin: auto;
+    }
+
+    section:nth-of-type(odd) p {
+        padding: 30px 0px;
+        text-align: justify;
+    }
+
+    .secFotos > div > div {
+        padding: 0px 30px;
+        border: 1px solid black;
+    }
+
+    .secFotos > div > div > figure figcaption {
+        font-size: 24px;
+    }
+
+    footer {
+        padding: 60px;
+    }
+
+
+
+}
