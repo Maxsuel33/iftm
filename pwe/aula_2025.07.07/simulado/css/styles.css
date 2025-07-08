@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin:0px;
+    padding: 0px;
+}
+body {
+    font-family: 'Roboto', sans-serif;;
+}
+header nav {
+    background-color: rgb(10, 10, 110);
+} 
+header ul {
+    display: flex;
+    flex-direction: row;
+    width: 1200px;
+    margin:auto;
+    justify-content: center;
+    list-style: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+body {
+    background-color: black;
+}
+header ul li {
+    padding: 20px 40px;
+}
+header ul a:link, header ul a:visited {
+    color: white;
+    text-decoration: none;
+}
+header ul a:hover {
+    text-decoration: underline;
+}
+header img {
+    width: 100%;
+    height: 300px;
+}
+.secaoCinza {
+    background-color: rgb(221, 221, 221);
+} 
+main p {
+    margin: 20px 0px;
+    text-align: justify;
+}
+main button {
+    padding: 10px 30px;
+    border:0px;
+    border-radius: 5px;
+}
+main button:hover {
+    cursor: pointer;
+}
+.btnPreto:hover {
+    background-color: orangered;
+}
+.btnPreto { 
+    background-color: black;
+    color: white;
+}
+.btnAzul:hover {
+    background-color: orangered;
+}
+.btnAzul { 
+    background-color: rgb(11, 11, 155);
+    color: white;
+}
+.secaoBranca {
+    background-color: white;
+}
+
+main section {
+    padding: 50px;
+    width: 1200px;
+    margin: auto;
+}
+main section h1 {
+    font-size: 40px;
+}
+main section h2 {
+    font-size: 25px;
+}
+main section h1, main section h2 {
+    margin:20px 0px;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+}
+.container > div {
+    padding: 20px;
+    text-align: center;
+    width: 50%;
+}
+.container img {
+    width: 90%;
+}
+.secaoCompromissos h2 {
+    text-align: left;
+}
+footer p {
+    text-align: center;
+    color: white;
+    padding: 50px;
+}

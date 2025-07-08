@@ -1,0 +1,193 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: Arial;
+    background-color: black;
+}
+
+header nav {
+    background-color: rgb(13, 13, 94);
+
+}
+
+header nav ul {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    
+}
+
+header ul li {
+    padding: 9px;
+    margin: auto;
+    width: 100%;
+    list-style: none;
+}
+
+header a:link,
+header a:visited {
+    text-decoration: none;
+    color: white;
+    display: block;
+    text-transform: uppercase;
+    transition: all 0.5s;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+    
+}
+
+
+
+section {
+    padding: 40px 30px;
+}
+
+.secApresentacao h1 {
+    font-size: 24px;
+    margin: 5px 0px;
+}
+
+h2 {
+    font-size: 20px;
+    padding: 5px 0px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+p {
+    font-size: 15px;
+    padding: 10px 0px;
+}
+
+main section:nth-of-type(odd) {
+    background-color: rgb(221, 221, 221);
+}
+
+main section:nth-of-type(even) {
+    background-color: white;
+}
+
+main input[type="button"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    margin-top: 15px;
+
+}
+main input[type="button"]:hover {
+    background-color: orangered;
+
+}
+
+.botaoPreto {
+    background-color: black;
+}
+.botaoAzul {
+    background-color: rgb(13, 13, 94);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.secImgs > div > div {
+    
+    padding: 20px 0px;
+
+}
+
+.secSomos h2 {
+    margin-top: 20px ;
+
+}
+
+
+
+
+
+@media screen and (min-width:768px) {
+
+    header nav ul {
+        flex-direction: row;
+        width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    header nav li {
+        padding: 100x;
+
+    }
+
+    header nav a {
+        display: inline;
+    }
+
+    main section {
+        width: 1200px;
+        margin: auto;
+        padding: 30px 50px;
+        
+    
+    }
+
+    main h1 {
+        font-size: 38px;
+        
+    }
+    
+    main h2 {
+        font-size: 28px;
+        
+    }
+
+    main h3 {
+        font-size: 22px;
+
+        
+    }
+
+    main p {
+        font-size: 18px;
+        
+        
+    }
+
+    .container {
+        flex-direction: row;
+    }
+    
+    .secImgs {
+        padding: 40px 20px;
+    }
+
+    .secImgs > div > div form{
+        text-align: center;
+        
+        
+        
+        
+    }
+  
+
+
+
+
+
+}
+
