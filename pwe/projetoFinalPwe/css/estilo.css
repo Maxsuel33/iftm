@@ -195,6 +195,13 @@ footer {
     margin-top: 170px;
   }
 
+  .secApr > div {
+  border: 1px solid #fff;
+  width: 100px;
+  margin: auto;
+  background-color: #fff;
+}
+
   .secVolei,
   .secGames {
     flex-direction: column;
