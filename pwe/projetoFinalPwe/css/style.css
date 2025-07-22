@@ -1,80 +1,317 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Tint&display=swap');
 
+
 * {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    padding-top: 70px;
+  font-family: Arial, sans-serif;
+  background-color: #242424;
+  color: white;
+  line-height: 1.6;
+  padding-top: 120px; 
 }
 
+/* ---------------------- HEADER ---------------------- */
 header {
-    background-color: rgb(160, 0, 0);
-    position: fixed;
-    width: 100%;
-    padding: 10px;
-    top: -120px;
-    transition: all 0.6s;
+  background-color: black;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  transition: all 0.6s;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  
 }
 
-header:hover {
-    top: 0px;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 15px;
-    color: ;
-}
-
-header nav {
-    font-family: "Bungee", sans-serif;
-    border: 1px solid red;
-    width: 600px;
+.secHeader {
     margin: auto;
-    
-   
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-header nav:hover {
-    
-}
 
-header nav ul {
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.5s ease-in-out;
+  padding: 0px;
+ 
+  margin-right: 420px;
   
-    list-style: none;
-    padding: 0px;
-    text-align: center  ;
-
 }
 
-header nav ul li {
+.logo h1 {
+    font-size: 30px;
+    margin-right: 80px;
+
+    font-family: "Bungee", sans-serif;
+    
+}
+
+
+
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(to right, rgb(85, 0, 0), rgb(120, 0, 0));
+  border-radius: 10px;
+  overflow: hidden;
+ 
+
   
-    display: inline-block;
-}
-
-header nav a:link, header nav a:visited {
-    color: white;
-    text-decoration: none;
-    padding: 20px;
-    display: inline-block;
 
 }
 
-header nav a:hover {
-    color: black;
+nav ul li {
+  display: inline-block;
+  
+  
+
+}
+
+nav ul li a {
+    
+  display: block;
+  padding: 20px 30px;
+  color: white;
+  text-decoration: none;
+  font-family: "Bungee", sans-serif;
+  transition: all 0.4s;
+  
+}
+
+nav ul li a:hover {
+  background-color: white;
+  color: black;
+  border-bottom: 5px solid black;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+main section {
+    margin-bottom: 50px;
+    
+}
+
+.times {
+    margin-top: 190px;
+    padding: 30px;
     background-color: white;
-    
+    color: #000;
 }
 
-.voltarTopo {
-    border: 1px solid black;
-    width: 70px;
-    height: 70px;
-    position: fixed;
-    top: 160px;
-    right: 30px;
-    background-color: rgba(240, 248, 255, 0.973);
+main h1 {
+    font-size: 30px;
+}
+
+main h1, 
+main h2,
+main h3 {
+    font-family: "Bungee", sans-serif;
+    margin-bottom: 15px;
+
+    }
+
+.times p {
+    margin-bottom: 40px;
+    font-size: 20px;
+
+}
+
+.jogadores {
+    padding: 30px;
+    background-color: #111;
+}
+
+.jogadores figure {
+        margin-bottom: 30px;
+    }
+
+.jogadores p {
+    text-align: justify;
+    margin-bottom: 30px;
+}
+
+.partidas {
+    padding: 30px;
+    background-color: white;
+    color: #000;
+}
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 768px) {
+
+    nav ul {
+        flex-direction: row;
+        margin: 0px;
+    }
+
+    nav ul li a {
+        font-size: 18px;
+    }
+
+    .logo {
+        margin-right: 0px;
+        padding: 10px;
+    }
+
+    .logo h1 {
+        padding: 10px;
+        margin-right: 350px;
+        font-size: 50px;
+    }
+
+    .container {
+        flex-direction: row;
+        width: 1200px;
+
+    }
+
+    main section {
+        width: 1200px;
+        margin: auto;
+    }
+
+    .coluna {
+        flex-direction: column;
+        width: 1200px;
+    }
+
+    .times {
+    margin-top: 20px;
+    }
+
+    main h2 {
+        font-size: 30px;
+    }
+
+    main h3 {
+        font-size: 25px;
+    }
+
+    .times h1 {
+        display: block;
+        width: 1200px;
+        margin: auto;
+        font-size: 40px;
+        
+    }
+
+
+    .times > div > div {
+        width: 100%;
+        padding: 15px 30px;
+
+    }
+
+    .jogadores > div > div {
+        width: 100%;
+        padding: 15px 30px;
+
+    }
+
+    .jogadores h2 {
+        font-size: 30px;
+        display: block;
+        width: 1200px;
+        margin: auto;
+        margin-bottom: 50px;
+    }
+
+    .jogadores figure {
+        margin-bottom: 10px;
+        padding: 20px;
+        display: inline-block;
+    }
+
+    .partidas > div > div {
+        width: 100%;
+        padding: 15px 30px;
+        text-align: center;
+
+    }
+
+    .partidas ul {
+
+         display: inline-block;
+         list-style: square;
+    }
+
+
+
+        
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #000;
+  font-size: 14px;
 }

@@ -50,14 +50,12 @@ header > div {
     font-size: 30px;
     margin-right: 100px;
     font-family: "Bungee", sans-serif;
+  
     
 }
 
 
-nav {
-    
-   
-}
+
 
 nav ul {
   list-style: none;
@@ -65,7 +63,6 @@ nav ul {
   background-image: linear-gradient(to right, rgb(85, 0, 0), rgb(120, 0, 0));
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid white;
 
   
 
@@ -109,19 +106,22 @@ section {
 .secApr {
   text-align: center;
   color: #000;
+  margin-top: 50px;
   
 }
 
 .secApr h1 {
   font-size: 2.5em;
   margin-bottom: 20px;
+  font-family: "Bungee", sans-serif;
 }
 
-.secApr,
-.secGames {
-  background-color: white;
+.secApr > div {
+  border: 1px solid #fff;
+  width: 400px;
+  margin: auto;
+  background-color: #fff;
 }
-
 
 
 .secVolei {
@@ -139,6 +139,10 @@ section {
    
 }
 
+.secGames {
+  flex-wrap: nowrap;
+}
+
 .coluna {
   flex: 1 1 45%;
   background-color: #222;
@@ -150,6 +154,16 @@ section {
 .coluna h2 {
   margin-bottom: 10px;
   font-family: "Bungee", sans-serif;
+}
+
+.secGames h1 {
+    display: block;
+    font-family: "Bungee", sans-serif;
+    color: white;
+}
+
+.secGames ul {
+  padding: 0px 30px;
 }
 
 /* ---------------------- FOOTER ---------------------- */
@@ -171,6 +185,10 @@ footer {
   nav ul li a {
     padding: 15px;
     text-align: center;
+  }
+
+  .secHeader {
+    width: auto;
   }
 
   .secApr {
