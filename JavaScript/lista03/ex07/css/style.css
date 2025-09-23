@@ -1,0 +1,48 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    text-align: center;
+}
+
+form h1 {
+    color: dodgerblue;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-family: Verdana;
+
+}
+
+form p {
+    display: inline;
+    white-space: nowrap;
+    color: red;
+    font-weight: bold;
+    font-family: verdana;
+    font-size: 10px;
+}
+
+body > div {
+    border: 2px solid black;
+    width: 500px;
+    height: 210px;
+    margin: 100px auto;
+    padding: 20px;
+    text-align: left;
+    ;
+}
+
+
+form div {
+    padding: 3px;
+}
+
+input[type="button"] {
+    color: black;
+    border: none;
+    padding: 8px;
+}
