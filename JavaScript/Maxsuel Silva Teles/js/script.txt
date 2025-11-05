@@ -1,0 +1,91 @@
+text = document.getElementById("texto");
+img = document.getElementById("imagem");
+resultado = document.getElementById("resultado");
+
+    document.getElementById("personagem1").addEventListener("click", function() {
+
+      img.src = "img/imagem01.png";
+      resultado.textContent = text.value;
+
+
+
+    });
+
+
+
+    document.getElementById("personagem2").addEventListener("click", function() {
+
+      img.src = "img/imagem02.png";
+      resultado.textContent = text.value.toUpperCase();
+
+
+
+    });
+
+
+
+    document.getElementById("personagem3").addEventListener("click", function() {
+
+      img.src = "img/imagem03.png";
+      let primeiraPalavra = text.value.trim().split(" ")[0];
+      resultado.textContent = primeiraPalavra;
+
+
+    });
+
+
+
+
+    document.getElementById("personagem4").addEventListener("click", function() {
+
+
+      img.src = "img/imagem04.png";
+      numero = parseInt(text.value);
+      if (isNaN(numero)) {
+        alert("Por favor, digite um número inteiro válido!");
+        return;
+      }
+      resultado.textContent = numero + 1;
+
+    });
+
+
+
+    valorPersonagem05 = 0;
+
+
+    document.getElementById("personagem5").addEventListener("click", function() {
+    img.src = "img/imagem05.png";
+
+  if (valorPersonagem05 === 0) {
+    valorPersonagem05 = parseInt(text.value);
+    if (isNaN(valorPersonagem05)) {
+      valorPersonagem05 = 0;
+      return;
+    }
+  } else {
+    valorPersonagem05++;
+  }
+
+  resultado.textContent = valorPersonagem05; 
+});
+
+
+
+
+    document.getElementById("personagem6").addEventListener("mouseover", function() {
+
+    img.src = "img/imagem06.png";
+    nome = prompt("Digite seu nome:");
+      if (nome) {
+        mensagem = nome + ", " + text.value;
+        alert(mensagem);
+        resultado.textContent = mensagem;
+
+
+      }
+    });
+
+
+
+
