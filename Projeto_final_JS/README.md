@@ -1,5 +1,5 @@
-Repositório destinado ao armazenamento de materiais produzidos durante o curso de Tecnologia em Sistemas para Internet do IFTM campus Uberlândia Centro
+Repositório destinado ao armazenamento do PROJETO FINAL DA DISCIPLINA JS BÁSICO
 
-Para acesso de sites: https://maxsuel33.github.io/iftm/
+Para acesso de site login: https://maxsuel33.github.io/iftm/Projeto_final_JS/index.html
 
-Projeto final (em andamento): https://maxsuel33.github.io/iftm/pwe/projetoFinalPwe/index.html
+Para acesso de site cadastro: https://maxsuel33.github.io/iftm/Projeto_final_JS/cadastro.html
