@@ -17,7 +17,6 @@ Para acesso de site cadastro: https://maxsuel33.github.io/iftm/Projeto_final_JS/
 > Um jogo de Truco Mineiro single-player desenvolvido em Vanilla JavaScript, focado em lógica de regras tradicionais e inteligência artificial desafiadora.
 
 ![Status do Projeto](https://img.shields.io/badge/Status-Funcional-brightgreen)
-![Licença](https://img.shields.io/badge/License-MIT-blue)
 ![Tech](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS-yellow)
 
 ## 📖 Sobre o Projeto
