@@ -1,0 +1,176 @@
+/* Reset e configurações globais */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #0d4a2d, #1a5f3a); /* Gradiente verde escuro para tema de cartas */
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden; /* Para o fundo animado */
+}
+
+/* Fundo com cartas espalhadas (surpresa: animação de embaralhamento) */
+.background-cards {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.card-bg {
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0.1;
+    animation: shuffle 10s infinite ease-in-out;
+}
+
+.card1 { top: 10%; left: 10%; animation-delay: 0s; }
+.card2 { top: 20%; right: 15%; animation-delay: 2s; }
+.card3 { bottom: 15%; left: 20%; animation-delay: 4s; }
+.card4 { bottom: 10%; right: 10%; animation-delay: 6s; }
+
+@keyframes shuffle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(10deg) scale(1.1); }
+    50% { transform: rotate(-10deg) scale(0.9); }
+    75% { transform: rotate(5deg) scale(1.05); }
+}
+
+/* Container principal (formulário) */
+.container {
+    max-width: 400px;
+    width: 100%;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.8); /* Fundo semi-transparente para contraste */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1); /* Sombra interna para efeito de "carta" */
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 1s ease-out; /* Animação de entrada */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Título e subtítulo */
+.container h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.subtitle {
+    font-size: 1em;
+    margin-bottom: 30px;
+    color: #ffd700; /* Dourado para destaque */
+}
+
+/* Grupos de input */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transform: scale(1.02); /* Efeito de zoom sutil */
+}
+
+.help-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: #ccc;
+}
+
+/* Botão */
+button {
+    background: linear-gradient(45deg, #ff6b35, #f7931e); /* Gradiente laranja/vermelho para "fogo" do jogo */
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Feedback (mensagens) */
+.feedback {
+    margin-top: 20px;
+    font-size: 0.9em;
+    min-height: 20px; /* Espaço reservado */
+}
+
+.feedback.error {
+    color: #ff6b35;
+}
+
+.feedback.success {
+    color: #4caf50;
+}
+
+/* Link */
+.link {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.link a {
+    color: #ffd700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.link a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+    .card-bg {
+        font-size: 2rem;
+    }
+}

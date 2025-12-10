@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Jogo de Cartas</title>
+    <link rel="stylesheet" href="css/usuarios.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+</head>
+<body>
+    <div class="background-cards">
+        <div class="card-bg card1">♠</div>
+        <div class="card-bg card2">♥</div>
+        <div class="card-bg card3">♦</div>
+        <div class="card-bg card4">♣</div>
+    </div>
+
+    <div class="container">
+        <h2>Bem-vindo, Truqueiro!</h2>
+        <p class="subtitle">Faça login para começar a jogatina.</p>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="loginUser" class="sr-only">Usuário</label>
+                <input id="loginUser" type="text" placeholder="Nome de usuário" required autocomplete="username">
+            </div>
+            
+            <div class="input-group">
+                <label for="loginSenha" class="sr-only">Senha</label>
+                <input id="loginSenha" type="password" placeholder="Sua senha" required autocomplete="current-password">
+            </div>
+            
+            <button id="entrar" type="submit">Entrar na Mesa</button>
+        </form>
+        
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        
+        <p class="link">Ainda não tem conta? <a href="cadastro.html">Criar novo truqueiro</a></p>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

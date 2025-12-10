@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Jogo de Cartas</title>
+    <link rel="stylesheet" href="css/usuarios.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>"> <!-- Ícone de carta de baralho -->
+</head>
+<body>
+    <div class="background-cards"> <!-- Fundo com cartas espalhadas para imersão -->
+        <div class="card-bg card1">♠</div>
+        <div class="card-bg card2">♥</div>
+        <div class="card-bg card3">♦</div>
+        <div class="card-bg card4">♣</div>
+    </div>
+    <div class="container">
+        <h2>Criar Novo Truqueiro</h2>
+        <p class="subtitle">Entre no jogo e embaralhe suas chances!</p>
+        
+        <form id="cadastroForm">
+            <div class="input-group">
+                <label for="novoUser" class="sr-only">Novo Usuário</label>
+                <input id="novoUser" type="text" placeholder="Novo usuário (ex: MestreDasCartas)" required aria-describedby="userHelp">
+                <small id="userHelp" class="help-text">Escolha um nome único para seu perfil de jogador.</small>
+            </div>
+            
+            <div class="input-group">
+                <label for="novaSenha" class="sr-only">Senha</label>
+                <input id="novaSenha" type="password" placeholder="Senha (mín. 6 caracteres)" required aria-describedby="senhaHelp">
+                <small id="senhaHelp" class="help-text">Use letras, números e símbolos para uma senha forte.</small>
+            </div>
+            
+            <div class="input-group">
+                <label for="confSenha" class="sr-only">Confirmar Senha</label>
+                <input id="confSenha" type="password" placeholder="Confirmar senha" required>
+            </div>
+            
+            <button id="cadastrar" type="submit">Cadastrar Jogador</button>
+        </form>
+        
+        <div id="feedback" class="feedback" aria-live="polite"></div> <!-- Área para mensagens de erro/sucesso -->
+        
+        <p class="link"><a href="index.html">Já sou um truqueiro (fazer login)</a></p>
+    </div>
+    <script src="js/cadastro.js"></script>
+</body>
+</html>

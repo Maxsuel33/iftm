@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truco Mineiro - Mesa de Jogo</title>
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+</head>
+<body>
+    <header class="game-header">
+        <div class="user-info">
+            <span>👤 <strong id="nomeJogador">Visitante</strong></span>
+        </div>
+        
+        <div class="game-controls">
+            <div class="difficulty-selector">
+                <label for="dificuldade">Nível:</label>
+                <select id="dificuldade">
+                    <option value="facil">Fácil (30s)</option>
+                    <option value="medio" selected>Médio (15s)</option>
+                    <option value="dificil">Difícil (8s)</option>
+                </select>
+            </div>
+            
+            <div class="timer-display">
+                ⏳ <span id="timer">15</span>s
+            </div>
+        </div>
+
+        <div class="system-buttons">
+            <button id="btnPause" title="Pausar">⏸️</button>
+            <button id="btnPlay" title="Continuar" style="display:none;">▶️</button>
+            <button id="btnStop" title="Parar/Reiniciar Mão">⏹️</button>
+            <button id="btnExit" title="Sair do Jogo">🚪</button>
+        </div>
+    </header>
+
+    <main class="game-table">
+        
+        <div class="scoreboard">
+            <div class="score-box us">
+                <h3>Nós</h3>
+                <span id="scoreNos">0</span>
+            </div>
+            <div class="score-box them">
+                <h3>Eles</h3>
+                <span id="scoreEles">0</span>
+            </div>
+            <div class="round-points">
+                Mão vale: <span id="valorMao">1</span> tento(s)
+            </div>
+        </div>
+
+        <div class="hand opponent-hand" id="opponentHand">
+            <div class="card back"></div>
+            <div class="card back"></div>
+            <div class="card back"></div>
+        </div>
+
+        <div class="play-area">
+            <div class="drop-zone" id="tableCards">
+                <p class="table-message">Aguardando início...</p>
+            </div>
+        </div>
+
+        <div class="hand player-hand" id="playerHand">
+            </div>
+
+        <div class="action-bar">
+            <button id="btnTruco" class="action-btn truco">PEDIR TRUCO!</button>
+            <button id="btnCorrer" class="action-btn correr">Correr</button>
+        </div>
+    </main>
+
+    <div id="gameModal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modalTitle">Jogo Pausado</h2>
+            <p id="modalMessage">O tempo está parado.</p>
+            <button id="modalBtn">Continuar</button>
+        </div>
+    </div>
+
+    <script src="js/game.js"></script>
+</body>
+</html>
