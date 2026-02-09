@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sistema de Cálculo de Extintores</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px #ccc;
+}
+
+h2,h3{
+    text-align:center;
+}
+
+input, select{
+    width:100%;
+    padding:8px;
+    margin:5px 0;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#007bff;
+    color:white;
+    border:none;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+.extintor{
+    border:1px solid #ccc;
+    padding:10px;
+    margin-top:10px;
+    border-radius:5px;
+}
+
+.extPV {
+    width: 750px;
+}
+
+.resultado{
+    margin-top:20px;
+    background:#e9f5ff;
+    padding:15px;
+    border-radius:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Sistema de Cálculo de Manutenção e Pó</h2>
+
+<label>Quantidade de Extintores:</label>
+<input type="number" id="qtd" min="1" value="1" onchange="gerarCampos()">
+
+<div id="campos"></div>
+
+<button onclick="calcular()">Calcular</button>
+
+<div class="resultado" id="resultado"></div>
+
+</div>
+
+<script>
+
+function gerarCampos(){
+
+    let qtd = Number(document.getElementById("qtd").value);
+    let area = document.getElementById("campos");
+
+    area.innerHTML = "";
+
+    for(let i=1;i<=qtd;i++){
+
+        area.innerHTML += `
+        <div class="extintor">
+            <h3>Extintor ${i}</h3>
+            <label>Valor Total (R$)</label>
+            <input class="extPV" type="number" id="valor${i}" step="0.01">
+
+            <label>Peso (Kg)</label>
+            <input class="extPV" type="number" id="kg${i}" step="0.01">
+        </div>
+        `;
+    }
+}
+
+// Simula: valor * 60% - =
+function calcManutencao(valor){
+
+    let parte = valor * 0.6;   // 60%
+    let manut = valor - parte;
+
+    return manut;
+}
+
+// Simula: valor * 60% / kg =
+function calcPoKg(valor,kg){
+
+    let parte = valor * 0.6;   // 60%
+    let manut = valor - parte;
+
+    let poKg = parte / kg;
+
+    return poKg;
+}
+
+function calcular(){
+
+    let qtd = Number(document.getElementById("qtd").value);
+
+    let dados = [];
+    let valoresPoKg = [];
+
+    for(let i=1;i<=qtd;i++){
+
+        let valor = Number(document.getElementById(`valor${i}`).value);
+        let kg = Number(document.getElementById(`kg${i}`).value);
+
+        if(valor<=0 || kg<=0){
+            alert("Preencha todos os campos corretamente");
+            return;
+        }
+
+        let manut = calcManutencao(valor);
+        let poKg = calcPoKg(valor,kg);
+
+        dados.push({
+            valor,
+            kg,
+            manut,
+            poKg
+        });
+
+        valoresPoKg.push(poKg);
+    }
+
+    // Menor valor do pó por KG
+    let menorPoKg = Math.min(...valoresPoKg);
+
+    let saida = `<h3>Resultado</h3>`;
+
+    dados.forEach((item,index)=>{
+
+        let novoPo = menorPoKg * item.kg;
+        let novaManut = item.valor - novoPo;
+
+        saida += `
+        <b>Extintor ${index+1}</b><br>
+        Valor Total: R$ ${item.valor.toFixed(2)}<br>
+        Peso: ${item.kg} Kg<br>
+        Pó (R$): ${novoPo.toFixed(2)}<br>
+        Manutenção (R$): ${novaManut.toFixed(2)}<br><br>
+        `;
+    });
+
+    saida += `<b>Menor valor do pó por Kg:</b> R$ ${menorPoKg.toFixed(2)}`;
+
+    document.getElementById("resultado").innerHTML = saida;
+}
+
+// Inicializa
+gerarCampos();
+
+</script>
+
+</body>
+</html>
