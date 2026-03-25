@@ -1,0 +1,38 @@
+body {
+    background-color: rgb(15, 15, 15);
+    color: #fff;
+    font-family: Arial;
+    text-align: center;
+    margin-top: 155px;
+}
+
+h2 {
+    color: red;
+}
+
+input {
+    display: block;
+    margin: 10px auto;
+    padding: 8px;
+    border: 1px solid red;
+    background-color: #111;
+    color: #fff;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: darkred;
+}
+
+form {
+     border: 2px solid white;
+    margin-inline: 600px;
+    padding: 30px;
+}

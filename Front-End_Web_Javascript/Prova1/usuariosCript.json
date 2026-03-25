@@ -1,0 +1,22 @@
+[
+  {
+    "username": "wilton.filho",
+    "password": "$2a$10$tCqpw26c6GrcjGCSSHasm.A1wVExRtMZHMSXnjDvk5tAI2cLHoNyG"
+  },
+  {
+    "username": "maria.jose",
+    "password": "$2a$10$tVx3CFJNASJLiow.JY/J4e/Ykw8fCaex9NAJiNpt8dryFxCxtddui"
+  },
+  {
+    "username": "teste1",
+    "password": "$2a$10$YypP2VSQgSawkHRSM9XrIe7/.Q83LlIlJUCzU/9isF1kTtQbR46h."
+  },
+  {
+    "username": "teste2",
+    "password": "$2a$10$3eu2HdPqQiSPX.95hz4RSe1GVEU3ZPYsVTmIrPCKNtElm/g5ZELxC"
+  },
+  {
+    "username": "ana.carol",
+    "password": "$2a$10$3a0.FuVDA7fSD/v42GN4m.mzE8Xk4hTR2FG91Zx9ZhW8jjxcOsSdi"
+  }
+]
