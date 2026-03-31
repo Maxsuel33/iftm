@@ -6,3 +6,7 @@ https://maxsuel33.github.io/iftm/
 
 Projeto final (em andamento):
 https://maxsuel33.github.io/iftm/pwe/projetoFinalPwe/index.html
+
+
+3º Período :
+https://maxsuel33.github.io/iftm/Front-End_Web_Javascript/TMDB/index.html
