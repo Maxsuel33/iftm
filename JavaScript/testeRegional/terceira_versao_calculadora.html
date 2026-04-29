@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Extintores</title>
+<style>
+:root {
+  --bg:#0f0f1a;--card:#1e1e30;--card2:#26263d;--border:#35355a;
+  --text:#f0f0f0;--muted:#9090b0;--green:#4ade80;--yellow:#fbbf24;--pink:#f472b6;--red:#f87171;
+  --abc:#ff6b35;--bc:#38bdf8;--co2:#a78bfa;--esp:#34d399;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+  --transition: .25s ease;
+}
+[data-theme="light"]{
+  --bg:#f4f4f8;--card:#fff;--card2:#eef0f7;--border:#d0d4e8;
+  --text:#1a1a2e;--muted:#6060a0;--shadow:0 4px 24px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',sans-serif;min-height:100vh;padding:24px 16px 80px;transition:background var(--transition),color var(--transition);}
+
+/* THEME TOGGLE */
+.theme-btn{position:fixed;top:16px;right:16px;z-index:100;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:50%;width:40px;height:40px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:background var(--transition);}
+.theme-btn:hover{background:var(--card2);}
+
+/* HEADER */
+header{text-align:center;margin-bottom:36px;}
+.badge{display:inline-block;background:linear-gradient(135deg,#ff6b35,#e94e77);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:12px;}
+header h1{font-size:clamp(22px,5vw,34px);font-weight:800;background:linear-gradient(135deg,#ff6b35,#f7c59f,#e94e77);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;}
+header p{color:var(--muted);margin-top:8px;font-size:14px;}
+
+/* SOBRE */
+.sobre{max-width:860px;margin:0 auto 32px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.sobre-header{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;cursor:pointer;border-bottom:1px solid transparent;transition:border-color .2s;}
+.sobre-header.aberto{border-color:var(--border);}
+.sobre-header span{font-size:14px;font-weight:700;color:var(--muted);}
+.sobre-body{padding:20px 22px;display:none;animation:fadeIn .3s ease;}
+.sobre-body.aberto{display:block;}
+.sobre-body p{font-size:14px;line-height:1.75;color:var(--muted);margin-bottom:10px;}
+.sobre-body p:last-child{margin-bottom:0;}
+.sobre-body strong{color:var(--text);}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.pill{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;}
+
+/* BOTÃO GLOBAL */
+.btn-global{display:block;max-width:860px;margin:0 auto 32px;padding:16px;background:linear-gradient(135deg,#ff6b35,#e94e77,#a78bfa);background-size:200%;animation:gradShift 4s ease infinite;color:#fff;font-size:15px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:opacity .2s,transform .1s;box-shadow:0 4px 20px rgba(255,107,53,.3);}
+.btn-global:hover{opacity:.9;transform:translateY(-2px);}
+.btn-global:active{transform:translateY(0);}
+@keyframes gradShift{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
+
+/* PAINEL RESUMO */
+#resumo-geral{max-width:860px;margin:0 auto 32px;display:none;}
+#resumo-geral.visivel{display:block;animation:slideDown .4s ease;}
+.resumo-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;}
+.resumo-card h2{font-size:15px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.resumo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
+.resumo-stat{background:var(--card2);border-radius:10px;padding:12px 14px;border:1px solid var(--border);}
+.resumo-stat .rs-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}
+.resumo-stat .rs-val{font-size:16px;font-weight:800;}
+
+/* SEÇÕES */
+.secao{max-width:860px;margin:0 auto 24px;border-radius:16px;border:1px solid var(--border);overflow:hidden;background:var(--card);box-shadow:var(--shadow);}
+.secao-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:16px 22px;cursor:pointer;user-select:none;}
+.secao-header-left{display:flex;align-items:center;gap:12px;}
+.secao-title{font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:1px;}
+.secao-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.toggle-btn{background:rgba(128,128,200,.1);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:4px 12px;font-size:12px;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.toggle-btn:hover{background:var(--border);}
+.secao-body{padding:0 22px 22px;display:none;}
+.secao-body.aberto{display:block;}
+
+/* QTD */
+.qtd-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:18px 0;}
+.qtd-row label{color:var(--muted);font-size:13px;}
+.qtd-ctrl{display:flex;align-items:center;background:var(--card2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.qtd-ctrl button{background:none;border:none;font-size:20px;color:var(--text);width:38px;height:38px;cursor:pointer;transition:background .2s;}
+.qtd-ctrl button:hover{background:var(--border);}
+.qtd-ctrl input{background:none;border:none;color:var(--text);font-size:15px;font-weight:700;text-align:center;width:46px;outline:none;}
+.qtd-ctrl input::-webkit-outer-spin-button,.qtd-ctrl input::-webkit-inner-spin-button{-webkit-appearance:none;}
+
+/* CAMPOS */
+.campos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:18px;}
+.extintor-card{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;transition:border-color .2s;}
+.extintor-card:hover{border-color:var(--accent-color);}
+.extintor-card h3{font-size:12px;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent-color);}
+.field{margin-bottom:10px;}
+.field label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.field input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;padding:7px 10px;outline:none;transition:border-color .2s;}
+.field input:focus{border-color:var(--accent-color);}
+.field input.invalido{border-color:var(--red)!important;background:rgba(248,113,113,.07);}
+.field input.valido{border-color:var(--green);}
+.field input::placeholder{color:var(--border);}
+.erro-msg{font-size:10px;color:var(--red);margin-top:3px;display:none;}
+.field input.invalido ~ .erro-msg{display:block;}
+
+/* BTN SEÇÃO */
+.btn-calc-secao{width:100%;padding:12px;border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:opacity .2s,transform .1s;}
+.btn-calc-secao:hover{opacity:.88;transform:translateY(-1px);}
+.btn-calc-secao:active{transform:translateY(0);}
+
+/* RESULTADO */
+.resultado-secao{margin-top:20px;}
+.info-bar{border-radius:10px;padding:12px 18px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:18px;font-size:13px;border:1px solid var(--border);background:var(--card2);}
+.info-bar .stat{display:flex;flex-direction:column;gap:2px;}
+.info-bar .stat span:first-child{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;}
+.info-bar .stat span:last-child{font-weight:700;font-size:14px;}
+
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+thead tr{background:var(--card2);}
+th{padding:10px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);white-space:nowrap;}
+tbody tr{border-top:1px solid var(--border);transition:background .15s;}
+tbody tr:hover{background:var(--card2);}
+td{padding:10px 12px;}
+
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;}
+.tag-green{background:#0d2b1a;color:var(--green);border:1px solid #1a4a2a;}
+.tag-orange{background:#2b1a0d;color:var(--yellow);border:1px solid #4a2a1a;}
+.tag-pink{background:#2b0d1a;color:var(--pink);border:1px solid #5a1a3a;}
+[data-theme="light"] .tag-green{background:#e6fff0;}
+[data-theme="light"] .tag-orange{background:#fff7e0;}
+[data-theme="light"] .tag-pink{background:#ffe6f5;}
+.menor-badge{font-size:10px;color:#fff;padding:1px 6px;border-radius:8px;margin-left:5px;vertical-align:middle;}
+
+/* COR POR CARGA */
+.carga-abc{--accent-color:var(--abc);}
+.carga-bc {--accent-color:var(--bc);}
+.carga-co2{--accent-color:var(--co2);}
+.carga-esp{--accent-color:var(--esp);}
+.carga-abc .secao-header{background:linear-gradient(135deg,rgba(255,107,53,.12),transparent);border-bottom:1px solid rgba(255,107,53,.2);}
+.carga-bc  .secao-header{background:linear-gradient(135deg,rgba(56,189,248,.12),transparent);border-bottom:1px solid rgba(56,189,248,.2);}
+.carga-co2 .secao-header{background:linear-gradient(135deg,rgba(167,139,250,.12),transparent);border-bottom:1px solid rgba(167,139,250,.2);}
+.carga-esp .secao-header{background:linear-gradient(135deg,rgba(52,211,153,.12),transparent);border-bottom:1px solid rgba(52,211,153,.2);}
+.carga-abc .secao-title{color:var(--abc);}
+.carga-bc  .secao-title{color:var(--bc);}
+.carga-co2 .secao-title{color:var(--co2);}
+.carga-esp .secao-title{color:var(--esp);}
+.carga-abc .btn-calc-secao{background:linear-gradient(135deg,var(--abc),#e94e77);}
+.carga-bc  .btn-calc-secao{background:linear-gradient(135deg,var(--bc),#0ea5e9);}
+.carga-co2 .btn-calc-secao{background:linear-gradient(135deg,var(--co2),#7c3aed);}
+.carga-esp .btn-calc-secao{background:linear-gradient(135deg,var(--esp),#059669);}
+.carga-abc .menor-badge{background:var(--abc);}
+.carga-bc  .menor-badge{background:var(--bc);}
+.carga-co2 .menor-badge{background:var(--co2);}
+.carga-esp .menor-badge{background:var(--esp);}
+
+/* ANIMAÇÕES */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+.row-anim{animation:fadeIn .35s ease both;}
+
+@media(max-width:500px){
+  th,td{padding:8px 7px;font-size:11px;}
+  .secao-header,.secao-body{padding-left:14px;padding-right:14px;}
+}
+</style>
+</head>
+<body>
+
+<button class="theme-btn" onclick="toggleTheme()" title="Alternar tema" id="themeIcon">🌙</button>
+
+<header>
+  <div class="badge">🔥 Ferramenta Interna</div>
+  <h1>Calculadora de Extintores</h1>
+  <p>Separado por tipo de carga · Manutenção 40% · Pó/Recarga 60%</p>
+</header>
+
+<!-- SOBRE O PROJETO -->
+<div class="sobre" id="sobre-box">
+  <div class="sobre-header" onclick="toggleSobre()" id="sobre-hdr">
+    <span>📖 Sobre o Projeto</span>
+    <span style="font-size:12px;color:var(--muted)" id="sobre-arrow">▼ Ver mais</span>
+  </div>
+  <div class="sobre-body" id="sobre-body">
+    <p>
+      Empresas de manutenção e recarga de extintores precisam separar o valor cobrado ao cliente em dois componentes:
+      <strong>40% para manutenção</strong> e <strong>60% para o pó químico ou recarga</strong> — e ainda calcular o custo por quilo da carga.
+    </p>
+    <p>
+      Antes desta ferramenta, esse processo era feito <strong>manualmente na calculadora</strong>, levando até 5 minutos por tipo de extintor.
+      Com múltiplos tipos de carga (ABC, BC, CO₂, Espuma), o tempo perdido por pedido era significativo.
+    </p>
+    <p>
+      Esta calculadora automatiza todo o processo: basta informar o valor total e o peso de cada extintor.
+      O sistema calcula automaticamente a divisão, encontra o <strong>menor custo de pó por kg</strong> dentro de cada grupo e padroniza os valores — sem misturar cargas diferentes.
+    </p>
+    <div class="pills">
+      <span class="pill" style="background:rgba(255,107,53,.15);color:var(--abc)">HTML / CSS / JS</span>
+      <span class="pill" style="background:rgba(52,211,153,.15);color:var(--esp)">Automação de Processo</span>
+      <span class="pill" style="background:rgba(167,139,250,.15);color:var(--co2)">Portfólio</span>
+    </div>
+  </div>
+</div>
+
+<!-- BOTÃO GLOBAL -->
+<button class="btn-global" onclick="calcularTudo()">⚡ Calcular Todas as Cargas de Uma Vez</button>
+
+<!-- RESUMO GERAL -->
+<div id="resumo-geral">
+  <div class="resumo-card">
+    <h2>📊 Resumo Geral — Todas as Cargas</h2>
+    <div class="resumo-grid" id="resumo-grid"></div>
+  </div>
+</div>
+
+<!-- SEÇÕES -->
+<div id="secoes"></div>
+
+<script>
+const CARGAS=[
+  {id:"abc",label:"ABC — Pó Químico ABC",emoji:"🟠",sub:"Uso geral · maior valor de mercado"},
+  {id:"bc", label:"BC — Pó Químico BC", emoji:"🔵",sub:"Líquidos e gases inflamáveis"},
+  {id:"co2",label:"CO₂ — Gás Carbônico",emoji:"🟣",sub:"Ambientes elétricos e precisão"},
+  {id:"esp",label:"Espuma Mecânica",    emoji:"🟢",sub:"Líquidos inflamáveis e sólidos"},
+];
+const MANUT=0.40, PO=0.60;
+const fmt=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+
+/* TEMA */
+function toggleTheme(){
+  let h=document.documentElement;
+  let dark=h.getAttribute("data-theme")==="dark";
+  h.setAttribute("data-theme",dark?"light":"dark");
+  document.getElementById("themeIcon").textContent=dark?"☀️":"🌙";
+}
+
+/* SOBRE */
+function toggleSobre(){
+  let b=document.getElementById("sobre-body");
+  let h=document.getElementById("sobre-hdr");
+  let a=document.getElementById("sobre-arrow");
+  let open=b.classList.toggle("aberto");
+  h.classList.toggle("aberto",open);
+  a.textContent=open?"▲ Ver menos":"▼ Ver mais";
+}
+
+/* SEÇÕES */
+function buildSecoes(){
+  let html="";
+  CARGAS.forEach(c=>{
+    html+=`
+    <div class="secao carga-${c.id}" id="secao-${c.id}">
+      <div class="secao-header" onclick="toggleSecao('${c.id}')">
+        <div class="secao-header-left">
+          <span style="font-size:24px">${c.emoji}</span>
+          <div>
+            <div class="secao-title">${c.label}</div>
+            <div class="secao-sub">${c.sub}</div>
+          </div>
+        </div>
+        <button class="toggle-btn" id="togglebtn-${c.id}">▼ Expandir</button>
+      </div>
+      <div class="secao-body" id="body-${c.id}">
+        <div class="qtd-row">
+          <label>Quantidade de extintores:</label>
+          <div class="qtd-ctrl">
+            <button onclick="ajustar('${c.id}',-1);event.stopPropagation()">−</button>
+            <input type="number" id="qtd-${c.id}" min="1" max="20" value="1" oninput="gerarCampos('${c.id}')">
+            <button onclick="ajustar('${c.id}',1);event.stopPropagation()">+</button>
+          </div>
+        </div>
+        <div class="campos-grid" id="campos-${c.id}"></div>
+        <button class="btn-calc-secao" onclick="calcular('${c.id}')">⚡ Calcular ${c.label.split("—")[0].trim()}</button>
+        <div class="resultado-secao" id="resultado-${c.id}"></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById("secoes").innerHTML=html;
+  CARGAS.forEach(c=>gerarCampos(c.id));
+}
+
+function toggleSecao(id){
+  let b=document.getElementById(`body-${id}`);
+  let btn=document.getElementById(`togglebtn-${id}`);
+  let open=b.classList.toggle("aberto");
+  btn.textContent=open?"▲ Recolher":"▼ Expandir";
+}
+
+function ajustar(id,delta){
+  let el=document.getElementById(`qtd-${id}`);
+  el.value=Math.max(1,Math.min(20,Number(el.value)+delta));
+  gerarCampos(id);
+}
+
+function gerarCampos(id){
+  let qtd=Math.max(1,Number(document.getElementById(`qtd-${id}`).value));
+  let area=document.getElementById(`campos-${id}`);
+  area.innerHTML="";
+  for(let i=1;i<=qtd;i++){
+    area.innerHTML+=`
+      <div class="extintor-card">
+        <h3>🧯 Extintor ${i}</h3>
+        <div class="field">
+          <label>Descrição (opcional)</label>
+          <input type="text" id="desc-${id}-${i}" placeholder="Ex: 6kg · Bloco A">
+        </div>
+        <div class="field">
+          <label>Valor Total (R$)</label>
+          <input type="number" id="valor-${id}-${i}" step="0.01" min="0.01" placeholder="Ex: 65,00"
+            oninput="validar(this,'num')">
+          <div class="erro-msg">Informe um valor maior que zero.</div>
+        </div>
+        <div class="field">
+          <label>Peso (kg)</label>
+          <input type="number" id="kg-${id}-${i}" step="0.01" min="0.01" placeholder="Ex: 6"
+            oninput="validar(this,'num')">
+          <div class="erro-msg">Informe um peso maior que zero.</div>
+        </div>
+      </div>`;
+  }
+  document.getElementById(`resultado-${id}`).innerHTML="";
+}
+
+/* VALIDAÇÃO EM TEMPO REAL */
+function validar(el,tipo){
+  let v=parseFloat(el.value);
+  let ok=!isNaN(v)&&v>0;
+  el.classList.toggle("invalido",el.value!==""&&!ok);
+  el.classList.toggle("valido",ok);
+}
+
+/* CALCULAR UM GRUPO */
+function calcular(id,silencioso=false){
+  let qtd=Math.max(1,Number(document.getElementById(`qtd-${id}`).value));
+  let dados=[];
+
+  for(let i=1;i<=qtd;i++){
+    let valor=parseFloat(document.getElementById(`valor-${id}-${i}`).value);
+    let kg=parseFloat(document.getElementById(`kg-${id}-${i}`).value);
+    let desc=document.getElementById(`desc-${id}-${i}`).value.trim();
+
+    if(!valor||!kg||valor<=0||kg<=0){
+      if(!silencioso) alert(`Preencha Valor e Peso do Extintor ${i} (${id.toUpperCase()}).`);
+      return null;
+    }
+    let po=valor*PO, manut=valor*MANUT, poKg=po/kg;
+    dados.push({valor,kg,desc,po,manut,poKg});
+  }
+
+  let menorPoKg=Math.min(...dados.map(d=>d.poKg));
+  let rows=dados.map((d,i)=>{
+    let novoPoTotal=menorPoKg*d.kg;
+    let novaManut=d.valor-novoPoTotal;
+    let isMenor=Math.abs(d.poKg-menorPoKg)<0.001;
+    return{...d,novoPoTotal,novaManut,isMenor,idx:i+1};
+  });
+
+  let totalValor=dados.reduce((a,d)=>a+d.valor,0);
+  let totalManut=dados.reduce((a,d)=>a+d.manut,0);
+  let totalPo=dados.reduce((a,d)=>a+d.po,0);
+
+  let saida=`
+    <div class="info-bar">
+      <div class="stat"><span>Extintores</span><span style="color:var(--accent-color)">${qtd}</span></div>
+      <div class="stat"><span>Total Geral</span><span style="color:var(--accent-color)">${fmt(totalValor)}</span></div>
+      <div class="stat"><span>Total Manutenção</span><span style="color:var(--green)">${fmt(totalManut)}</span></div>
+      <div class="stat"><span>Total Pó/Recarga</span><span style="color:var(--yellow)">${fmt(totalPo)}</span></div>
+      <div class="stat"><span>Menor Pó/kg</span><span style="color:var(--pink)">${fmt(menorPoKg)}/kg</span></div>
+    </div>
+    <table><thead><tr>
+      <th>#</th><th>Descrição</th><th>Valor Total</th><th>Peso</th>
+      <th>Pó (60%)</th><th>Manutenção (40%)</th><th>Pó/kg</th>
+      <th>Pó (padr.)</th><th>Manut. (padr.)</th>
+    </tr></thead><tbody>`;
+
+  rows.forEach((r,ri)=>{
+    saida+=`<tr class="row-anim" style="animation-delay:${ri*60}ms">
+      <td style="color:var(--accent-color);font-weight:700">🧯${r.idx}</td>
+      <td style="color:var(--muted);font-size:12px">${r.desc||"—"}</td>
+      <td>${fmt(r.valor)}</td><td>${r.kg} kg</td>
+      <td><span class="tag tag-orange">${fmt(r.po)}</span></td>
+      <td><span class="tag tag-green">${fmt(r.manut)}</span></td>
+      <td>${fmt(r.poKg)}/kg${r.isMenor?`<span class="menor-badge">★ menor</span>`:""}</td>
+      <td><span class="tag tag-pink">${fmt(r.novoPoTotal)}</span></td>
+      <td><span class="tag tag-green">${fmt(r.novaManut)}</span></td>
+    </tr>`;
+  });
+  saida+=`</tbody></table>`;
+
+  let res=document.getElementById(`resultado-${id}`);
+  res.innerHTML=saida;
+
+  return{totalValor,totalManut,totalPo,qtd,menorPoKg};
+}
+
+/* CALCULAR TUDO */
+function calcularTudo(){
+  // Abre todas as seções primeiro
+  CARGAS.forEach(c=>{
+    let b=document.getElementById(`body-${c.id}`);
+    let btn=document.getElementById(`togglebtn-${c.id}`);
+    b.classList.add("aberto");
+    btn.textContent="▲ Recolher";
+  });
+
+  let totais={valor:0,manut:0,po:0,ext:0};
+  let algumOk=false;
+
+  CARGAS.forEach(c=>{
+    let r=calcular(c.id,true);
+    if(r){
+      totais.valor+=r.totalValor;
+      totais.manut+=r.totalManut;
+      totais.po+=r.totalPo;
+      totais.ext+=r.qtd;
+      algumOk=true;
+    }
+  });
+
+  if(!algumOk){alert("Preencha ao menos um grupo de extintores.");return;}
+
+  let g=document.getElementById("resumo-geral");
+  document.getElementById("resumo-grid").innerHTML=`
+    <div class="resumo-stat"><div class="rs-label">Total de Extintores</div><div class="rs-val" style="color:var(--abc)">${totais.ext}</div></div>
+    <div class="resumo-stat"><div class="rs-label">Valor Total Geral</div><div class="rs-val" style="color:var(--bc)">${fmt(totais.valor)}</div></div>
+    <div class="resumo-stat"><div class="rs-label">Total Manutenção</div><div class="rs-val" style="color:var(--green)">${fmt(totais.manut)}</div></div>
+    <div class="resumo-stat"><div class="rs-label">Total Pó/Recarga</div><div class="rs-val" style="color:var(--yellow)">${fmt(totais.po)}</div></div>
+    <div class="resumo-stat"><div class="rs-label">% Manutenção</div><div class="rs-val" style="color:var(--pink)">${((totais.manut/totais.valor)*100).toFixed(1)}%</div></div>
+    <div class="resumo-stat"><div class="rs-label">% Pó/Recarga</div><div class="rs-val" style="color:var(--co2)">${((totais.po/totais.valor)*100).toFixed(1)}%</div></div>
+  `;
+  g.classList.add("visivel");
+  g.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+buildSecoes();
+</script>
+</body>
+</html>
