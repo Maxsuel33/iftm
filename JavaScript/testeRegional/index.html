@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extintores Regional — Sistema Integrado</title>
+<style>
+:root{
+  --bg:#0f0f1a;--card:#1e1e30;--card2:#26263d;--border:#35355a;
+  --text:#f0f0f0;--muted:#9090b0;--green:#4ade80;--yellow:#fbbf24;
+  --red:#f87171;--blue:#38bdf8;--purple:#a78bfa;--pink:#f472b6;
+  --abc:#ff6b35;--bc:#38bdf8;--co2:#a78bfa;--esp:#34d399;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',sans-serif;min-height:100vh;padding:0 0 80px;}
+
+/* NAV */
+nav{background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:14px 24px;position:sticky;top:0;z-index:50;}
+.nav-brand{font-size:15px;font-weight:800;background:linear-gradient(135deg,#ff6b35,#f7c59f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-tabs{display:flex;gap:4px;}
+.tab-btn{background:none;border:none;color:var(--muted);font-size:13px;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer;transition:all .2s;}
+.tab-btn.ativo{background:linear-gradient(135deg,#ff6b35,#e94e77);color:#fff;}
+.tab-btn:hover:not(.ativo){background:var(--card2);color:var(--text);}
+
+/* PÁGINAS */
+.pagina{display:none;max-width:860px;margin:0 auto;padding:28px 16px;}
+.pagina.ativa{display:block;}
+
+/* HEADER */
+.pg-header{text-align:center;margin-bottom:28px;}
+.badge{display:inline-block;background:linear-gradient(135deg,#ff6b35,#e94e77);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:10px;}
+.pg-header h1{font-size:clamp(20px,4vw,28px);font-weight:800;background:linear-gradient(135deg,#ff6b35,#f7c59f,#e94e77);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.pg-header p{color:var(--muted);font-size:13px;margin-top:6px;}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:20px;}
+.card h2{font-size:14px;font-weight:700;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;}
+
+/* UPLOAD */
+.upload-area{border:2px dashed var(--border);border-radius:14px;padding:30px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;}
+.upload-area:hover,.upload-area.drag{border-color:#ff6b35;background:rgba(255,107,53,.05);}
+.upload-area input{display:none;}
+.upload-icon{font-size:32px;margin-bottom:8px;}
+.upload-area h3{font-size:14px;font-weight:700;margin-bottom:4px;}
+.upload-area p{font-size:12px;color:var(--muted);}
+.file-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px;}
+.chip{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.chip .rm{cursor:pointer;color:var(--red);font-size:13px;}
+
+/* CAMPO COD CLIENTE */
+.cod-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+.cod-row label{font-size:13px;color:var(--muted);white-space:nowrap;}
+.cod-input{background:var(--card2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-weight:700;padding:8px 12px;outline:none;width:120px;transition:border-color .2s;}
+.cod-input:focus{border-color:#ff6b35;}
+
+/* BOTÕES */
+.btn{padding:11px 24px;border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:opacity .2s,transform .1s;display:inline-flex;align-items:center;gap:6px;}
+.btn:hover{opacity:.88;transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+.btn-primary{background:linear-gradient(135deg,#ff6b35,#e94e77);}
+.btn-ghost{background:var(--card2);border:1px solid var(--border);color:var(--muted);}
+.btn-pdf{background:linear-gradient(135deg,#7c3aed,#a78bfa);}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+
+/* PROGRESS */
+.prog{margin-top:14px;display:none;}
+.prog.ativo{display:block;}
+.prog-track{background:var(--card2);border-radius:6px;height:5px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(135deg,#ff6b35,#e94e77);border-radius:6px;transition:width .3s;}
+.prog-lbl{font-size:11px;color:var(--muted);text-align:center;margin-top:5px;}
+
+/* RESULTADOS CONFERÊNCIA */
+.os-bloco{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden;animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.os-hdr{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:space-between;background:linear-gradient(135deg,rgba(255,107,53,.08),transparent);}
+.os-info h2{font-size:14px;font-weight:800;color:#f7c59f;}
+.os-info p{font-size:12px;color:var(--muted);margin-top:2px;}
+.os-stats{display:flex;gap:14px;flex-wrap:wrap;}
+.os-st .sv{font-size:17px;font-weight:800;text-align:center;}
+.os-st .sl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:1px;text-align:center;}
+.os-body{padding:14px 20px;}
+
+.cond-bar{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 14px;margin-bottom:14px;font-size:13px;display:flex;align-items:center;gap:8px;}
+
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead tr{background:var(--card2);}
+th{padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);white-space:nowrap;}
+tbody tr{border-top:1px solid var(--border);transition:background .15s;}
+tbody tr:hover{background:var(--card2);}
+td{padding:8px 10px;vertical-align:middle;}
+
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;}
+.t-n2{background:rgba(56,189,248,.12);color:var(--blue);border:1px solid rgba(56,189,248,.3);}
+.t-n3{background:rgba(167,139,250,.12);color:var(--purple);border:1px solid rgba(167,139,250,.3);}
+.t-pin{background:rgba(250,191,36,.12);color:var(--yellow);border:1px solid rgba(250,191,36,.3);}
+.t-hid{background:rgba(167,139,250,.18);color:#c4b5fd;border:1px solid rgba(167,139,250,.4);}
+.t-rod{background:rgba(244,114,182,.12);color:var(--pink);border:1px solid rgba(244,114,182,.3);}
+.abc{color:var(--abc)}.bc{color:var(--bc)}.co2{color:var(--co2)}.ap{color:var(--esp)}.em{color:var(--esp)}
+
+/* CONFERÊNCIA MANUAL */
+.conf-sec{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+.conf-sec h4{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;}
+.conf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;}
+.ci{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:9px;transition:border-color .2s,background .2s;}
+.ci label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.ci-row{display:flex;align-items:center;gap:6px;}
+.ci .ov{font-size:13px;font-weight:700;min-width:22px;}
+.ci input{width:58px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;padding:4px 6px;outline:none;transition:border-color .2s;}
+.ci input:focus{border-color:#ff6b35;}
+.ci.ok{border-color:var(--green)!important;background:rgba(74,222,128,.05)!important;}
+.ci.err{border-color:var(--red)!important;background:rgba(248,113,113,.05)!important;}
+.cb{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:700;}
+.cb-ok{background:rgba(74,222,128,.15);color:var(--green);}
+.cb-err{background:rgba(248,113,113,.15);color:var(--red);}
+
+/* CONSOLIDADO */
+.consolidado{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 20px;margin-bottom:20px;}
+.consolidado h2{font-size:14px;font-weight:800;color:var(--yellow);margin-bottom:12px;}
+.cons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
+.cs{background:var(--card2);border-radius:10px;padding:10px;border:1px solid var(--border);}
+.cs .csv{font-size:17px;font-weight:800;}
+.cs .csl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+
+/* CALCULADORA */
+.qtd-ctrl{display:inline-flex;align-items:center;background:var(--card2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.qtd-ctrl button{background:none;border:none;color:var(--text);font-size:18px;width:34px;height:34px;cursor:pointer;}
+.qtd-ctrl button:hover{background:var(--border);}
+.qtd-ctrl input{background:none;border:none;color:var(--text);font-size:14px;font-weight:700;text-align:center;width:42px;outline:none;}
+.qtd-ctrl input::-webkit-outer-spin-button,.qtd-ctrl input::-webkit-inner-spin-button{-webkit-appearance:none;}
+.campos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:14px;}
+.ext-card{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;transition:border-color .2s;}
+.field{margin-bottom:10px;}
+.field label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.field input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;padding:7px 10px;outline:none;transition:border-color .2s;}
+.field input:focus{border-color:var(--abc);}
+.field input.inv{border-color:var(--red)!important;background:rgba(248,113,113,.07);}
+.field input.ok2{border-color:var(--green);}
+.info-bar{border-radius:10px;padding:11px 16px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:16px;font-size:13px;border:1px solid var(--border);background:var(--card2);}
+.st{display:flex;flex-direction:column;gap:2px;}
+.st span:first-child{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;}
+.st span:last-child{font-weight:700;font-size:13px;}
+
+/* SEÇÕES CALC */
+.secao{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px;background:var(--card);}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;cursor:pointer;user-select:none;}
+.sec-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;}
+.sec-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.sec-body{padding:0 18px 18px;display:none;}
+.sec-body.open{display:block;}
+.btn-calc-sec{width:100%;padding:10px;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;text-transform:uppercase;transition:opacity .2s;}
+.btn-calc-sec:hover{opacity:.88;}
+.res-sec{margin-top:14px;}
+.menor-badge{font-size:10px;color:#fff;padding:1px 6px;border-radius:8px;margin-left:4px;vertical-align:middle;}
+.carga-abc{--ac:var(--abc)}.carga-bc{--ac:var(--bc)}.carga-co2{--ac:var(--co2)}.carga-esp{--ac:var(--esp)}.carga-ap{--ac:var(--esp)}
+.carga-abc .sec-hdr{background:linear-gradient(135deg,rgba(255,107,53,.1),transparent);border-bottom:1px solid rgba(255,107,53,.15);}
+.carga-bc  .sec-hdr{background:linear-gradient(135deg,rgba(56,189,248,.1),transparent);border-bottom:1px solid rgba(56,189,248,.15);}
+.carga-co2 .sec-hdr{background:linear-gradient(135deg,rgba(167,139,250,.1),transparent);border-bottom:1px solid rgba(167,139,250,.15);}
+.carga-esp .sec-hdr{background:linear-gradient(135deg,rgba(52,211,153,.1),transparent);border-bottom:1px solid rgba(52,211,153,.15);}
+.carga-ap  .sec-hdr{background:linear-gradient(135deg,rgba(52,211,153,.1),transparent);border-bottom:1px solid rgba(52,211,153,.15);}
+.carga-abc .sec-title{color:var(--abc)}.carga-bc .sec-title{color:var(--bc)}.carga-co2 .sec-title{color:var(--co2)}.carga-esp .sec-title,.carga-ap .sec-title{color:var(--esp)}
+.carga-abc .btn-calc-sec{background:linear-gradient(135deg,var(--abc),#e94e77);}
+.carga-bc  .btn-calc-sec{background:linear-gradient(135deg,var(--bc),#0ea5e9);}
+.carga-co2 .btn-calc-sec{background:linear-gradient(135deg,var(--co2),#7c3aed);}
+.carga-esp .btn-calc-sec,.carga-ap .btn-calc-sec{background:linear-gradient(135deg,var(--esp),#059669);}
+.carga-abc .menor-badge{background:var(--abc)}.carga-bc .menor-badge{background:var(--bc)}.carga-co2 .menor-badge{background:var(--co2)}.carga-esp .menor-badge,.carga-ap .menor-badge{background:var(--esp)}
+.tag-orange{background:#2b1a0d;color:var(--yellow);border:1px solid #4a2a1a;}
+.tag-green{background:#0d2b1a;color:var(--green);border:1px solid #1a4a2a;}
+.tag-pink2{background:#2b0d1a;color:var(--pink);border:1px solid #5a1a3a;}
+
+/* PDF PREVIEW */
+#pdfPreview{display:none;margin-top:20px;}
+#pdfPreview.vis{display:block;animation:fadeIn .3s ease;}
+.pdf-frame{background:#fff;color:#111;border-radius:12px;padding:32px 36px;font-family:'Segoe UI',sans-serif;font-size:12px;max-width:680px;margin:0 auto;box-shadow:0 8px 32px rgba(0,0,0,.4);}
+.pdf-frame h1{font-size:16px;font-weight:800;margin-bottom:4px;}
+.pdf-frame .subtitle{color:#555;font-size:11px;margin-bottom:20px;}
+.pdf-divider{border:none;border-top:1.5px solid #ddd;margin:14px 0;}
+.pdf-meta{display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;margin-bottom:16px;font-size:12px;}
+.pdf-meta .lbl{color:#777;}
+.pdf-meta .val{font-weight:700;}
+.pdf-table{width:100%;border-collapse:collapse;font-size:11.5px;}
+.pdf-table th{background:#f4f4f8;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#555;border-bottom:1.5px solid #ddd;}
+.pdf-table td{padding:7px 10px;border-bottom:1px solid #eee;}
+.pdf-table tr:last-child td{border-bottom:none;}
+.pdf-table .num{text-align:center;font-weight:700;}
+.pdf-section-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#888;margin:14px 0 6px;font-weight:700;}
+.pdf-footer{margin-top:20px;font-size:10px;color:#aaa;text-align:center;}
+.pdf-alert{background:#fff5f5;border-left:3px solid #f87171;padding:8px 12px;border-radius:0 6px 6px 0;margin-bottom:10px;font-size:11.5px;color:#c0392b;}
+.pdf-ok{background:#f0fff4;border-left:3px solid #4ade80;padding:8px 12px;border-radius:0 6px 6px 0;margin-bottom:10px;font-size:11.5px;color:#166534;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">🔥 Extintores Regional</div>
+  <div class="nav-tabs">
+    <button class="tab-btn ativo" onclick="irPara('conferencia',this)">📋 Conferência OS</button>
+    <button class="tab-btn" onclick="irPara('calculadora',this)">🧮 Calculadora</button>
+  </div>
+</nav>
+
+<!-- ══════════════════ CONFERÊNCIA ══════════════════ -->
+<div class="pagina ativa" id="pg-conferencia">
+  <div class="pg-header">
+    <div class="badge">📋 Conferência</div>
+    <h1>Conferência de OS</h1>
+    <p>Leitura automática · PDF.js · Zencheck</p>
+  </div>
+
+  <div class="card">
+    <h2>📄 Upload dos PDFs</h2>
+    <div class="upload-area" id="dropZone" onclick="document.getElementById('fileInput').click()"
+      ondragover="ev=>{ev.preventDefault();document.getElementById('dropZone').classList.add('drag')}"
+      ondragleave="document.getElementById('dropZone').classList.remove('drag')"
+      ondrop="handleDrop(event)">
+      <input type="file" id="fileInput" accept=".pdf" multiple onchange="handleFiles(this.files)">
+      <div class="upload-icon">📄</div>
+      <h3>Selecionar PDFs das OS</h3>
+      <p>Clique ou arraste um ou mais arquivos PDF aqui</p>
+      <div class="file-chips" id="fileList"></div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="cod-row">
+        <label>Código do cliente:</label>
+        <input class="cod-input" type="text" id="codCliente" placeholder="Ex: 7017" maxlength="20">
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnAnalisar" onclick="analisar()" disabled>⚡ Analisar OS</button>
+        <button class="btn btn-ghost" onclick="limpar()">✕ Limpar</button>
+      </div>
+      <div class="prog" id="progressBar">
+        <div class="prog-track"><div class="prog-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="prog-lbl" id="progressLabel">Processando...</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="resultados"></div>
+
+  <!-- PDF PREVIEW -->
+  <div id="pdfPreview">
+    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:16px;flex-wrap:wrap;">
+      <button class="btn btn-pdf" onclick="imprimirPDF()">🖨️ Imprimir / Salvar PDF</button>
+      <button class="btn btn-ghost" onclick="fecharPDF()">✕ Fechar</button>
+    </div>
+    <div class="pdf-frame" id="pdfFrame"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ CALCULADORA ══════════════════ -->
+<div class="pagina" id="pg-calculadora">
+  <div class="pg-header">
+    <div class="badge">🧮 Calculadora</div>
+    <h1>Calculadora de Extintores</h1>
+    <p>Separado por tipo de carga · Manutenção 40% · Pó/Recarga 60%</p>
+  </div>
+
+  <button class="btn btn-primary" style="display:block;width:100%;max-width:860px;margin:0 auto 20px;padding:14px;"
+    onclick="calcularTudo()">⚡ Calcular Todas as Cargas</button>
+
+  <div id="secoesCalc"></div>
+</div>
+
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+/* ════ NAV ════ */
+function irPara(id,btn){
+  document.querySelectorAll('.pagina').forEach(p=>p.classList.remove('ativa'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('ativo'));
+  document.getElementById('pg-'+id).classList.add('ativa');
+  btn.classList.add('ativo');
+}
+
+/* ════ UPLOAD ════ */
+let arquivos=[];
+function handleFiles(files){
+  for(let f of files) if(f.type==='application/pdf'&&!arquivos.find(a=>a.name===f.name)) arquivos.push(f);
+  renderChips();
+}
+function handleDrop(e){e.preventDefault();document.getElementById('dropZone').classList.remove('drag');handleFiles(e.dataTransfer.files);}
+function renderChips(){
+  document.getElementById('fileList').innerHTML=arquivos.map((f,i)=>
+    `<div class="chip">📄 ${f.name} <span class="rm" onclick="rmFile(${i});event.stopPropagation()">✕</span></div>`).join('');
+  document.getElementById('btnAnalisar').disabled=arquivos.length===0;
+}
+function rmFile(i){arquivos.splice(i,1);renderChips();}
+function limpar(){arquivos=[];renderChips();document.getElementById('resultados').innerHTML='';fecharPDF();document.getElementById('progressBar').classList.remove('ativo');}
+
+/* ════ PROGRESSO ════ */
+function setProgress(pct,lbl){
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent=lbl;
+  document.getElementById('progressBar').classList.add('ativo');
+}
+
+/* ════ PDF EXTRAÇÃO ════ */
+async function extrairTexto(file){
+  const buf=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+  let all=[];
+  for(let p=1;p<=pdf.numPages;p++){
+    const page=await pdf.getPage(p);
+    const tc=await page.getTextContent();
+    const vp=page.getViewport({scale:1});
+    tc.items.forEach(item=>{
+      if(!item.str.trim()) return;
+      all.push({str:item.str.trim(),x:Math.round(item.transform[4]),y:Math.round(vp.height-item.transform[5]),page:p});
+    });
+  }
+  return all;
+}
+
+/* ════ PARSER ════ */
+const TIPOS=['ABC','BC','CO2','CO₂','EM','AP','AGUA','ÁGUA'];
+const PORTÁTIL_MAX=12; // kg
+
+function parsearOS(items){
+  // Agrupar em linhas por Y (tolerância 4px)
+  const linhas=[];
+  items.forEach(item=>{
+    let l=linhas.find(l=>Math.abs(l.y-item.y)<=4&&l.page===item.page);
+    if(!l){l={y:item.y,page:item.page,tokens:[]};linhas.push(l);}
+    l.tokens.push(item);
+  });
+  linhas.forEach(l=>l.tokens.sort((a,b)=>a.x-b.x));
+  linhas.sort((a,b)=>a.page!==b.page?a.page-b.page:a.y-b.y);
+
+  // Metadados
+  const meta={numero:'',cliente:'',entrada:'',saida:''};
+  const txt=items.map(i=>i.str).join(' ');
+  const mOs=txt.match(/Nº:\s*(\d[\d.]*)\s/);if(mOs)meta.numero=mOs[1];
+  const mEnt=txt.match(/Data entrada:\s*([\d\/]+)/);if(mEnt)meta.entrada=mEnt[1];
+  const mSai=txt.match(/Data sa[ií]da[.:]*\s*([\d\/]+)/);if(mSai)meta.saida=mSai[1];
+  const mCli=txt.match(/\d{4}\s*-\s*([A-ZÁÉÍÓÚÃÕÂÊÎÔÛÇ][^\n]{5,60?}(?:LTDA|ME|SA|S\.A\.|EPP|EIRELI)?)/i);
+  if(mCli)meta.cliente=mCli[1].trim();
+
+  // Extintores
+  const extintores=[];
+  for(let li=0;li<linhas.length;li++){
+    const tks=linhas[li].tokens.map(t=>t.str);
+    if(tks.length<6) continue;
+    if(!/^(\d{1,3})$/.test(tks[0])) continue;
+    const ordem=parseInt(tks[0]);
+    const janela=tks.slice(0,20).join(' ');
+    const tipoRaw=TIPOS.find(t=>janela.includes(t));
+    if(!tipoRaw) continue;
+
+    const temSelo=/^\d{9}$/.test(tks[1]);
+    const condenado=!temSelo;
+
+    let tipo=tipoRaw==='CO₂'?'CO2':(tipoRaw==='AGUA'||tipoRaw==='ÁGUA')?'AP':tipoRaw;
+    const tipoIdx=tks.findIndex(t=>TIPOS.includes(t));
+    if(tipoIdx===-1) continue;
+
+    let capacCarga=0;
+    const capTk=tks[tipoIdx+1];
+    if(capTk&&/^\d+$/.test(capTk)) capacCarga=parseInt(capTk);
+
+    let nivel=0,pintura='N';
+    for(let j=tipoIdx+1;j<Math.min(tipoIdx+9,tks.length);j++){
+      if(/^[123]$/.test(tks[j])){
+        nivel=parseInt(tks[j]);
+        if(tks[j+1]==='S'||tks[j+1]==='N') pintura=tks[j+1];
+        break;
+      }
+    }
+    if(!nivel||!tipo||!capacCarga) continue;
+
+    const sobreRodas=capacCarga>PORTÁTIL_MAX;
+    extintores.push({ordem,tipo,capacCarga,nivel,pintura,hidro:nivel===3,sobreRodas,condenado});
+  }
+  return{meta,extintores};
+}
+
+/* ════ AGRUPAMENTO ════ */
+function agrupar(exts){
+  const g={};
+  exts.filter(e=>!e.condenado).forEach(e=>{
+    const k=`${e.tipo}|${e.capacCarga}`;
+    if(!g[k]) g[k]={tipo:e.tipo,cap:e.capacCarga,n2:0,n3:0,pintura:0,hidPort:0,hidRod:0,total:0,sobreRodas:e.sobreRodas};
+    g[k].total++;
+    if(e.nivel===2)g[k].n2++;
+    if(e.nivel===3)g[k].n3++;
+    if(e.pintura==='S')g[k].pintura++;
+    if(e.hidro&&!e.sobreRodas)g[k].hidPort++;
+    if(e.hidro&&e.sobreRodas)g[k].hidRod++;
+  });
+  const ord={ABC:0,BC:1,CO2:2,EM:3,AP:4};
+  return Object.values(g).sort((a,b)=>(ord[a.tipo]??9)-(ord[b.tipo]??9)||a.cap-b.cap);
+}
+
+/* ════ COR TIPO ════ */
+function cTipo(t){return{ABC:'abc',BC:'bc',CO2:'co2',EM:'ap',AP:'ap'}[t]||'';}
+
+/* ════ CONFERIR MANUAL ════ */
+function conferir(uid,key,osVal,input){
+  const badge=document.getElementById(`cb-${uid}-${key}`);
+  const item=document.getElementById(`ci-${uid}-${key}`);
+  if(input===''){badge.textContent='';item.className='ci';return;}
+  const zen=parseInt(input);if(isNaN(zen))return;
+  const ok=zen===osVal;
+  badge.textContent=ok?'✓ OK':'✗ Δ'+Math.abs(zen-osVal);
+  badge.className='cb '+(ok?'cb-ok':'cb-err');
+  item.className='ci '+(ok?'ok':'err');
+}
+
+/* ════ RENDER OS ════ */
+let _allOsData=[];
+
+function renderOS(osData,fileName,uid){
+  const {meta,extintores}=osData;
+  const grupos=agrupar(extintores);
+  const bons=extintores.filter(e=>!e.condenado);
+  const cond=extintores.filter(e=>e.condenado);
+  const n2=bons.filter(e=>e.nivel===2).length;
+  const n3=bons.filter(e=>e.nivel===3).length;
+  const pin=bons.filter(e=>e.pintura==='S').length;
+  const hidP=bons.filter(e=>e.hidro&&!e.sobreRodas).length;
+  const hidR=bons.filter(e=>e.hidro&&e.sobreRodas).length;
+
+  let h=`<div class="os-bloco">
+    <div class="os-hdr">
+      <div class="os-info">
+        <h2>📋 OS Nº ${meta.numero||fileName}</h2>
+        <p>${meta.cliente||'Cliente não identificado'} &nbsp;·&nbsp; Entrada: ${meta.entrada||'—'} &nbsp;·&nbsp; Saída: ${meta.saida||'—'}</p>
+      </div>
+      <div class="os-stats">
+        <div class="os-st"><div class="sv" style="color:#f7c59f">${bons.length}</div><div class="sl">Extintores</div></div>
+        <div class="os-st"><div class="sv" style="color:var(--blue)">${n2}</div><div class="sl">Nível 2</div></div>
+        <div class="os-st"><div class="sv" style="color:var(--purple)">${n3}</div><div class="sl">Nível 3</div></div>
+        <div class="os-st"><div class="sv" style="color:var(--yellow)">${pin}</div><div class="sl">Pintura</div></div>
+        ${hidP?`<div class="os-st"><div class="sv" style="color:#c4b5fd">${hidP}</div><div class="sl">Hid.Port.</div></div>`:''}
+        ${hidR?`<div class="os-st"><div class="sv" style="color:var(--pink)">${hidR}</div><div class="sl">Hid.Rod.</div></div>`:''}
+        ${cond.length?`<div class="os-st"><div class="sv" style="color:var(--red)">${cond.length}</div><div class="sl">Condenados</div></div>`:''}
+      </div>
+    </div>
+    <div class="os-body">`;
+
+  if(cond.length) h+=`<div class="cond-bar">⚠️ ${cond.length} extintor(es) <strong>condenado(s)</strong> — Ordem(ns): ${cond.map(c=>c.ordem).join(', ')}</div>`;
+
+  if(!grupos.length){h+=`<p style="color:var(--muted);text-align:center;padding:20px 0">Nenhum extintor válido identificado.</p>`;}
+  else{
+    h+=`<table><thead><tr><th>Tipo</th><th>Cap.</th><th>Total</th><th>Nível 2</th><th>Nível 3</th><th>Pintura</th><th>Hid. Portátil</th><th>Hid. S.Rodas</th></tr></thead><tbody>`;
+    grupos.forEach(g=>{
+      h+=`<tr>
+        <td class="${cTipo(g.tipo)}" style="font-weight:700">${g.tipo}</td>
+        <td>${g.cap} kg</td><td><strong>${g.total}</strong></td>
+        <td>${g.n2?`<span class="tag t-n2">${g.n2}</span>`:'—'}</td>
+        <td>${g.n3?`<span class="tag t-n3">${g.n3}</span>`:'—'}</td>
+        <td>${g.pintura?`<span class="tag t-pin">${g.pintura}</span>`:'—'}</td>
+        <td>${g.hidPort?`<span class="tag t-hid">${g.hidPort}</span>`:'—'}</td>
+        <td>${g.hidRod?`<span class="tag t-rod">${g.hidRod}</span>`:'—'}</td>
+      </tr>`;
+    });
+    h+=`</tbody></table>`;
+
+    // Conferência manual
+    const confItems=[
+      {key:'tot',label:'Total',val:bons.length},
+      {key:'n2',label:'Nível 2',val:n2},
+      {key:'n3',label:'Nível 3',val:n3},
+      {key:'pin',label:'Pintura',val:pin},
+      {key:'hidP',label:'Hid. Portátil',val:hidP},
+      {key:'hidR',label:'Hid. S.Rodas',val:hidR},
+    ].filter(ci=>ci.val>0||['tot','n2','n3'].includes(ci.key));
+
+    h+=`<div class="conf-sec"><h4>🔍 Conferência manual — values do Zencheck</h4><div class="conf-grid">`;
+    confItems.forEach(ci=>{
+      h+=`<div class="ci" id="ci-${uid}-${ci.key}">
+        <label>${ci.label}</label>
+        <div class="ci-row">
+          <span class="ov">${ci.val}</span>
+          <span style="color:var(--muted);font-size:11px">OS</span>
+          <input type="number" min="0" placeholder="Zencheck" oninput="conferir('${uid}','${ci.key}',${ci.val},this.value)">
+          <span class="cb" id="cb-${uid}-${ci.key}"></span>
+        </div>
+      </div>`;
+    });
+    h+=`</div></div>`;
+
+    // Botão gerar PDF
+    h+=`<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+      <button class="btn btn-pdf" onclick="gerarPDF('${uid}')">📄 Gerar Resumo PDF desta OS</button>
+    </div>`;
+  }
+  h+=`</div></div>`;
+  return h;
+}
+
+/* ════ CONSOLIDADO ════ */
+function renderConsolidado(lista){
+  if(lista.length<2) return '';
+  let tot=0,n2=0,n3=0,pin=0,hidP=0,hidR=0,cond=0;
+  lista.forEach(({extintores:e})=>{
+    const b=e.filter(x=>!x.condenado);
+    tot+=b.length;n2+=b.filter(x=>x.nivel===2).length;n3+=b.filter(x=>x.nivel===3).length;
+    pin+=b.filter(x=>x.pintura==='S').length;
+    hidP+=b.filter(x=>x.hidro&&!x.sobreRodas).length;
+    hidR+=b.filter(x=>x.hidro&&x.sobreRodas).length;
+    cond+=e.filter(x=>x.condenado).length;
+  });
+  return `<div class="consolidado">
+    <h2>📊 Consolidado — ${lista.length} OS</h2>
+    <div class="cons-grid">
+      <div class="cs"><div class="csv" style="color:#f7c59f">${tot}</div><div class="csl">Total</div></div>
+      <div class="cs"><div class="csv" style="color:var(--blue)">${n2}</div><div class="csl">Nível 2</div></div>
+      <div class="cs"><div class="csv" style="color:var(--purple)">${n3}</div><div class="csl">Nível 3</div></div>
+      <div class="cs"><div class="csv" style="color:var(--yellow)">${pin}</div><div class="csl">Pintura</div></div>
+      <div class="cs"><div class="csv" style="color:#c4b5fd">${hidP}</div><div class="csl">Hid. Portátil</div></div>
+      <div class="cs"><div class="csv" style="color:var(--pink)">${hidR}</div><div class="csl">Hid. S.Rodas</div></div>
+      ${cond?`<div class="cs"><div class="csv" style="color:var(--red)">${cond}</div><div class="csl">Condenados</div></div>`:''}
+    </div>
+  </div>`;
+}
+
+/* ════ ANALISAR ════ */
+async function analisar(){
+  if(!arquivos.length) return;
+  document.getElementById('resultados').innerHTML='';
+  fecharPDF();
+  document.getElementById('btnAnalisar').disabled=true;
+  _allOsData=[];
+
+  for(let i=0;i<arquivos.length;i++){
+    setProgress(Math.round((i/arquivos.length)*90),`Processando ${arquivos[i].name}... (${i+1}/${arquivos.length})`);
+    const uid='os'+Math.random().toString(36).slice(2,7);
+    try{
+      const items=await extrairTexto(arquivos[i]);
+      const osData=parsearOS(items);
+      _allOsData.push({osData,fileName:arquivos[i].name,uid});
+    }catch(e){
+      _allOsData.push({osData:{meta:{numero:'ERRO'},extintores:[]},fileName:arquivos[i].name,uid});
+    }
+  }
+  setProgress(100,'Concluído!');
+  setTimeout(()=>document.getElementById('progressBar').classList.remove('ativo'),1200);
+
+  let h='';
+  if(_allOsData.length>1) h+=renderConsolidado(_allOsData.map(r=>r.osData));
+  _allOsData.forEach(r=>{ h+=renderOS(r.osData,r.fileName,r.uid); });
+  document.getElementById('resultados').innerHTML=h||'<p style="color:var(--muted);text-align:center;padding:40px">Nenhum dado encontrado.</p>';
+  document.getElementById('btnAnalisar').disabled=false;
+  document.getElementById('resultados').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ════ GERAR PDF ════ */
+function gerarPDF(uid){
+  const r=_allOsData.find(x=>x.uid===uid);
+  if(!r) return;
+  const {meta,extintores}=r.osData;
+  const grupos=agrupar(extintores);
+  const bons=extintores.filter(e=>!e.condenado);
+  const cond=extintores.filter(e=>e.condenado);
+  const n2=bons.filter(e=>e.nivel===2).length;
+  const n3=bons.filter(e=>e.nivel===3).length;
+  const pin=bons.filter(e=>e.pintura==='S').length;
+  const hidP=bons.filter(e=>e.hidro&&!e.sobreRodas).length;
+  const hidR=bons.filter(e=>e.hidro&&e.sobreRodas).length;
+  const cod=document.getElementById('codCliente').value.trim();
+  const now=new Date().toLocaleDateString('pt-BR');
+
+  let rows='';
+  grupos.forEach(g=>{
+    if(g.n2) rows+=`<tr><td>${g.tipo} ${g.cap} KG</td><td class="num">${g.n2}</td><td>Nível 2</td><td>—</td></tr>`;
+    if(g.n3) rows+=`<tr><td>${g.tipo} ${g.cap} KG</td><td class="num">${g.n3}</td><td>Nível 3 + Ensaio Hidrostático ${g.sobreRodas?'S.Rodas':'Portátil'}</td><td>—</td></tr>`;
+    if(g.pintura) rows+=`<tr><td>${g.tipo} ${g.cap} KG</td><td class="num">${g.pintura}</td><td>Com Pintura</td><td>—</td></tr>`;
+  });
+  if(hidP) rows+=`<tr style="background:#f8f8ff"><td colspan="2"><strong>Ensaio Hidrostático Portátil</strong></td><td><strong>${hidP}</strong></td><td>—</td></tr>`;
+  if(hidR) rows+=`<tr style="background:#f8f8ff"><td colspan="2"><strong>Ensaio Hidrostático Sobre Rodas</strong></td><td><strong>${hidR}</strong></td><td>—</td></tr>`;
+  if(cond.length) rows+=`<tr style="background:#fff5f5"><td colspan="2"><strong>Condenados</strong></td><td><strong>${cond.length}</strong></td><td>Ordem(ns): ${cond.map(c=>c.ordem).join(', ')}</td></tr>`;
+
+  const frame=document.getElementById('pdfFrame');
+  frame.innerHTML=`
+    <h1>Extintores Regional</h1>
+    <div class="subtitle">Resumo de Conferência de OS</div>
+    <hr class="pdf-divider">
+    <div class="pdf-meta">
+      <span class="lbl">OS Nº</span><span class="val">${meta.numero||'—'}</span>
+      <span class="lbl">Código do Cliente</span><span class="val">${cod||'—'}</span>
+      <span class="lbl">Cliente</span><span class="val">${meta.cliente||'—'}</span>
+      <span class="lbl">Data de geração</span><span class="val">${now}</span>
+      <span class="lbl">Data de entrada</span><span class="val">${meta.entrada||'—'}</span>
+      <span class="lbl">Data de saída</span><span class="val">${meta.saida||'—'}</span>
+    </div>
+    <hr class="pdf-divider">
+    <div class="pdf-section-title">Totais</div>
+    <div class="pdf-meta">
+      <span class="lbl">Total de extintores</span><span class="val">${bons.length}</span>
+      <span class="lbl">Nível 2</span><span class="val">${n2}</span>
+      <span class="lbl">Nível 3</span><span class="val">${n3}</span>
+      <span class="lbl">Com Pintura</span><span class="val">${pin}</span>
+      <span class="lbl">Hid. Portátil</span><span class="val">${hidP}</span>
+      <span class="lbl">Hid. Sobre Rodas</span><span class="val">${hidR}</span>
+    </div>
+    <hr class="pdf-divider">
+    <div class="pdf-section-title">Detalhamento por tipo de carga</div>
+    <table class="pdf-table">
+      <thead><tr><th>Tipo / Capacidade</th><th style="text-align:center">Qtd</th><th>Serviço</th><th>Obs</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="pdf-footer">Gerado em ${now} · Extintores Regional · Sistema de Conferência de OS</div>`;
+
+  document.getElementById('pdfPreview').classList.add('vis');
+  document.getElementById('pdfPreview').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function fecharPDF(){document.getElementById('pdfPreview').classList.remove('vis');}
+function imprimirPDF(){window.print();}
+
+/* ════════════════════════════════
+   CALCULADORA
+════════════════════════════════ */
+const CARGAS=[
+  {id:'abc',label:'ABC — Pó Químico ABC',emoji:'🟠',sub:'Uso geral · maior valor de mercado'},
+  {id:'bc', label:'BC — Pó Químico BC', emoji:'🔵',sub:'Líquidos e gases inflamáveis'},
+  {id:'co2',label:'CO₂ — Gás Carbônico',emoji:'🟣',sub:'Ambientes elétricos e precisão'},
+  {id:'esp',label:'Espuma Mecânica',    emoji:'🟢',sub:'Líquidos inflamáveis e sólidos'},
+  {id:'ap', label:'AP — Água Pressurizada',emoji:'💧',sub:'Incêndios classe A'},
+];
+const MANUT=0.40,PO=0.60;
+const fmtR=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+function buildCalc(){
+  let h='';
+  CARGAS.forEach(c=>{
+    h+=`<div class="secao carga-${c.id}" id="secao-${c.id}">
+      <div class="sec-hdr" onclick="toggleSec('${c.id}')">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:22px">${c.emoji}</span>
+          <div><div class="sec-title">${c.label}</div><div class="sec-sub">${c.sub}</div></div>
+        </div>
+        <button class="btn btn-ghost" style="padding:4px 12px;font-size:11px" id="tbtn-${c.id}">▼ Expandir</button>
+      </div>
+      <div class="sec-body" id="sbody-${c.id}">
+        <div style="display:flex;align-items:center;gap:12px;margin:14px 0 4px">
+          <span style="color:var(--muted);font-size:13px">Quantidade:</span>
+          <div class="qtd-ctrl">
+            <button onclick="adjCalc('${c.id}',-1);event.stopPropagation()">−</button>
+            <input type="number" id="qtd-${c.id}" min="1" max="20" value="1" oninput="genCampos('${c.id}')">
+            <button onclick="adjCalc('${c.id}',1);event.stopPropagation()">+</button>
+          </div>
+        </div>
+        <div class="campos-grid" id="campos-${c.id}"></div>
+        <button class="btn-calc-sec" onclick="calcSec('${c.id}')">⚡ Calcular ${c.label.split('—')[0].trim()}</button>
+        <div class="res-sec" id="res-${c.id}"></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('secoesCalc').innerHTML=h;
+  CARGAS.forEach(c=>genCampos(c.id));
+}
+
+function toggleSec(id){
+  const b=document.getElementById(`sbody-${id}`);
+  const btn=document.getElementById(`tbtn-${id}`);
+  const open=b.classList.toggle('open');
+  btn.textContent=open?'▲ Recolher':'▼ Expandir';
+}
+function adjCalc(id,d){
+  const el=document.getElementById(`qtd-${id}`);
+  el.value=Math.max(1,Math.min(20,Number(el.value)+d));
+  genCampos(id);
+}
+function genCampos(id){
+  const qtd=Math.max(1,Number(document.getElementById(`qtd-${id}`).value));
+  let h='';
+  for(let i=1;i<=qtd;i++){
+    h+=`<div class="ext-card">
+      <div style="font-size:11px;font-weight:700;color:var(--ac);text-transform:uppercase;margin-bottom:10px">🧯 Extintor ${i}</div>
+      <div class="field"><label>Descrição (opcional)</label><input type="text" id="desc-${id}-${i}" placeholder="Ex: 6kg · Bloco A"></div>
+      <div class="field"><label>Valor Total (R$)</label><input type="number" id="val-${id}-${i}" step="0.01" min="0" placeholder="Ex: 65,00" oninput="valida(this)"></div>
+      <div class="field"><label>Peso (kg)</label><input type="number" id="kg-${id}-${i}" step="0.01" min="0" placeholder="Ex: 6" oninput="valida(this)"></div>
+    </div>`;
+  }
+  document.getElementById(`campos-${id}`).innerHTML=h;
+  document.getElementById(`res-${id}`).innerHTML='';
+}
+function valida(el){
+  const v=parseFloat(el.value);
+  const ok=!isNaN(v)&&v>0;
+  el.classList.toggle('inv',el.value!==''&&!ok);
+  el.classList.toggle('ok2',ok);
+}
+function calcSec(id,silencioso=false){
+  const qtd=Math.max(1,Number(document.getElementById(`qtd-${id}`).value));
+  const dados=[];
+  for(let i=1;i<=qtd;i++){
+    const v=parseFloat(document.getElementById(`val-${id}-${i}`).value);
+    const kg=parseFloat(document.getElementById(`kg-${id}-${i}`).value);
+    const desc=document.getElementById(`desc-${id}-${i}`).value.trim();
+    if(!v||!kg||v<=0||kg<=0){if(!silencioso)alert(`Preencha Valor e Peso do Extintor ${i} (${id.toUpperCase()}).`);return null;}
+    const po=v*PO,manut=v*MANUT,poKg=po/kg;
+    dados.push({v,kg,desc,po,manut,poKg});
+  }
+  const menorPoKg=Math.min(...dados.map(d=>d.poKg));
+  const rows=dados.map((d,i)=>({...d,novoPo:menorPoKg*d.kg,novaManut:d.v-(menorPoKg*d.kg),isMenor:Math.abs(d.poKg-menorPoKg)<0.001,idx:i+1}));
+  const tV=dados.reduce((a,d)=>a+d.v,0),tM=dados.reduce((a,d)=>a+d.manut,0),tP=dados.reduce((a,d)=>a+d.po,0);
+
+  let h=`<div class="info-bar">
+    <div class="st"><span>Extintores</span><span style="color:var(--ac)">${qtd}</span></div>
+    <div class="st"><span>Total Geral</span><span style="color:var(--ac)">${fmtR(tV)}</span></div>
+    <div class="st"><span>Total Manutenção</span><span style="color:var(--green)">${fmtR(tM)}</span></div>
+    <div class="st"><span>Total Pó/Recarga</span><span style="color:var(--yellow)">${fmtR(tP)}</span></div>
+    <div class="st"><span>Menor Pó/kg</span><span style="color:var(--pink)">${fmtR(menorPoKg)}/kg</span></div>
+  </div>
+  <table><thead><tr><th>#</th><th>Desc.</th><th>Valor</th><th>Peso</th><th>Pó (60%)</th><th>Manut (40%)</th><th>Pó/kg</th><th>Pó (padr.)</th><th>Manut (padr.)</th></tr></thead><tbody>`;
+  rows.forEach((r,ri)=>{
+    h+=`<tr style="animation:fadeIn .3s ease ${ri*50}ms both">
+      <td style="color:var(--ac);font-weight:700">🧯${r.idx}</td>
+      <td style="color:var(--muted);font-size:11px">${r.desc||'—'}</td>
+      <td>${fmtR(r.v)}</td><td>${r.kg}kg</td>
+      <td><span class="tag tag-orange">${fmtR(r.po)}</span></td>
+      <td><span class="tag tag-green">${fmtR(r.manut)}</span></td>
+      <td>${fmtR(r.poKg)}/kg${r.isMenor?`<span class="menor-badge">★</span>`:''}</td>
+      <td><span class="tag tag-pink2">${fmtR(r.novoPo)}</span></td>
+      <td><span class="tag tag-green">${fmtR(r.novaManut)}</span></td>
+    </tr>`;
+  });
+  h+=`</tbody></table>`;
+  document.getElementById(`res-${id}`).innerHTML=h;
+  return{tV,tM,tP,qtd};
+}
+function calcularTudo(){
+  CARGAS.forEach(c=>{
+    document.getElementById(`sbody-${c.id}`).classList.add('open');
+    document.getElementById(`tbtn-${c.id}`).textContent='▲ Recolher';
+  });
+  CARGAS.forEach(c=>calcSec(c.id,true));
+}
+
+buildCalc();
+</script>
+</body>
+</html>
