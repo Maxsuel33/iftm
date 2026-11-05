@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Consulta ao Acervo — Biblioteca</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<header>
+  
+  <div class="inst"><strong>Biblioteca Central</strong>Consulta ao acervo</div>
+</header>
+
+<main>
+  <h1>Consulta ao acervo</h1>
+  <p class="lede">Pesquise um livro ou periódico por autor, título ou ISBN. Preencha pelo menos um campo.</p>
+
+  <form id="searchForm" novalidate>
+    <fieldset>
+      <legend>Buscar por</legend>
+      <div class="radios" id="searchType">
+        <label><input type="radio" name="tipo" value="todos" checked> Todos os campos</label>
+        <label><input type="radio" name="tipo" value="autor"> Autor</label>
+        <label><input type="radio" name="tipo" value="titulo"> Título</label>
+        <label><input type="radio" name="tipo" value="isbn"> ISBN</label>
+      </div>
+    </fieldset>
+
+    <div class="field" id="field-autor">
+      <label class="field-label" for="autor">Autor</label>
+      <input type="text" id="autor" name="autor" list="lista-autores" placeholder="Ex.: Machado de Assis" autocomplete="off">
+      <datalist id="lista-autores"></datalist>
+    </div>
+
+    <div class="field" id="field-titulo">
+      <label class="field-label" for="titulo">Título</label>
+      <input type="text" id="titulo" name="titulo" list="lista-titulos" placeholder="Ex.: Dom Casmurro" autocomplete="off">
+      <datalist id="lista-titulos"></datalist>
+    </div>
+
+    <div class="field" id="field-isbn">
+      <label class="field-label" for="isbn">ISBN</label>
+      <input type="text" id="isbn" name="isbn" inputmode="numeric" maxlength="13" placeholder="Ex.: 9788535902778">
+      <span class="hint">Código de 10 ou 13 dígitos, geralmente na contracapa do livro.</span>
+      <span class="field-error" id="isbn-error">O ISBN deve ter 10 ou 13 dígitos numéricos.</span>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="primary" id="btnBuscar" disabled>Buscar</button>
+      <button type="button" class="ghost" id="btnLimpar">Limpar campos</button>
+      <button type="button" class="ghost" id="btnCancelar" hidden>Cancelar</button>
+      <button type="button" class="help-btn" id="btnAjuda" aria-haspopup="dialog" title="Ajuda">?</button>
+    </div>
+
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="results" id="results"></div>
+  </form>
+</main>
+
+<dialog id="ajudaDialog">
+  <h2>Como pesquisar</h2>
+  <p>Escolha o que quer buscar por (todos os campos, autor, título ou ISBN) e preencha o campo correspondente. Quando "Todos os campos" está marcado, qualquer campo preenchido já é suficiente para encontrar resultados.</p>
+  <p>O ISBN é o código numérico impresso na contracapa do livro, com 10 ou 13 dígitos.</p>
+  <p>Dúvidas? Fale com o atendimento: <strong>biblioteca@iftm.edu.br</strong></p>
+  <div class="dialog-actions"><button type="button" class="primary" id="fecharAjuda">Entendi</button></div>
+</dialog>
+
+<script src="js/script.js">
+
+</script>
+</body>
+</html>
